@@ -75,7 +75,7 @@
         transform: translateX(-50%);
 
         i{
-            color: $green-color;
+            color: $green-color-btn-accessible;
         }
     }
 
@@ -83,7 +83,7 @@
         position: absolute;
         left: 5%;
         top: 5%;
-        background-color: $green-color;
+        background-color: $green-color-btn-accessible;
         color: #FFF;
         border-radius: 15px;
         font-size: 12px;
@@ -122,7 +122,7 @@
         margin-bottom: 10px;
     }
     .product__price{
-        color: $green-color;
+        color: $green-color-btn-accessible;
         font-weight: 600;
     }
     h3{
@@ -302,11 +302,15 @@
             color: $small-span;
         }
         .availability span{
-            color: $green-color;
+            color: $green-color-btn-accessible;
             font-weight: 500;
         }
         .add__to__cart{
             @include btn($green-hover, $green-color, 7px);
+            background-color: $green-color-btn-accessible;
+            &:hover {
+                background-color: $green-color-btn-accessible-hover;
+            }
             cursor: pointer;
         }
 
