@@ -39,7 +39,7 @@ let usd = {
 localStorage.setItem("currency", JSON.stringify(usd));
 }
 
-fetch_data('https://api.currencyfreaks.com/v2.0/rates/latest?apikey=9271916030654b879d5f13f9d079b58c')
+fetch_data('/api/currency')
 .then(res => {  
 
   for(let i in res.rates) {
