@@ -1,4 +1,66 @@
-// loading page
+// ========== Toast 通知系统 - 绝对能工作版本 ==========
+(function() {
+    // 创建 Toast 容器
+    let toastContainer = document.querySelector(".toast-container");
+    if (!toastContainer) {
+        toastContainer = document.createElement("div");
+        toastContainer.className = "toast-container";
+        toastContainer.style.cssText = "position: fixed; bottom: 20px; right: 20px; z-index: 9999;";
+        document.body.appendChild(toastContainer);
+    }
+
+    // 全局 Toast 函数
+    window.showToast = function(message, type = "info") {
+        console.log("Toast called:", message, type);  // 调试用，可以在控制台看到
+        
+        let container = document.querySelector(".toast-container");
+        if (!container) {
+            container = document.createElement("div");
+            container.className = "toast-container";
+            container.style.cssText = "position: fixed; bottom: 20px; right: 20px; z-index: 9999;";
+            document.body.appendChild(container);
+        }
+        
+        const toast = document.createElement("div");
+        let bgColor = "#17a2b8";  // info 蓝色
+        if (type === "success") bgColor = "#28a745";
+        if (type === "error") bgColor = "#dc3545";
+        
+        toast.style.cssText = `
+            background: ${bgColor};
+            color: white;
+            padding: 12px 20px;
+            margin-top: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        `;
+        toast.textContent = message;
+        
+        container.appendChild(toast);
+        
+        setTimeout(() => {
+            if (toast.parentNode) toast.remove();
+        }, 3000);
+    };
+    
+    // 添加动画（如果还没有）
+    if (!document.querySelector("#toast-animation-style")) {
+        const style = document.createElement("style");
+        style.id = "toast-animation-style";
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+})();
+// ========== Toast 系统结束 ==========
+// // loading page
 window.addEventListener("load", () => {
 document.querySelector("main").style.display = "block";
 document.querySelector(".loader").style.display = "none";
@@ -41,80 +103,85 @@ localStorage.setItem("currency", JSON.stringify(usd));
 
 fetch_data('/api/currency')
 .then(res => {  
-
-  for(let i in res.rates) {
-    if(['EUR', 'USD', 'GBP', 'EGP'].includes(i)) {
-        let cur = {
-            name: i,
-            rate: res.rates[i],
-            logo__src: `https://flagcdn.com/w40/${i.slice(0, i.length - 1).toLowerCase()}.png`
+    for(let i in res.rates) {
+        if(['EUR', 'USD', 'GBP', 'EGP'].includes(i)) {
+            let cur = {
+                name: i,
+                rate: res.rates[i],
+                logo__src: `https://flagcdn.com/w40/${i.slice(0, i.length - 1).toLowerCase()}.png`
+            }
+            currencies__data.push(cur);
         }
-        currencies__data.push(cur);
     }
-  }
 
-  let currency__options = document.createElement("ul");
-  currency__options.classList.add("currency__options", "list-unstyled", "p-1");
+    let currency__options = document.createElement("ul");
+    currency__options.classList.add("currency__options", "list-unstyled", "p-1");
 
-  currencies__data.forEach((ele) => {
-    let currency = document.createElement("li"),
-        currency__option__logo = document.createElement("img"),
-        currency__option__name = document.createElement("span");
-    
-    currency__option__logo.src = ele.logo__src;
-    currency__option__logo.alt = ele.name;
-
-    currency__option__name.textContent = ele.name;
-    currency__option__name.setAttribute("the-currency", ele.name);
-    currency__option__name.setAttribute("the-rate", ele.rate);
-
-    currency__container.append(currency__options);
-    currency.append(currency__option__logo, currency__option__name);
-    currency__options.append(currency);
-    
-    document.querySelector(".cart__items__preview").classList.remove("listed__cart");
-  });
-
-  currency__container.addEventListener("click", () => {
-    if(!currency__options.classList.contains("listed")) {
-        currency__options.classList.add("listed");
-        currency__list__ico.className = "fa-solid fa-chevron-up mx-1";
-    } else{
-        currency__options.classList.remove("listed");
-        currency__list__ico.className = "fa-solid fa-chevron-down mx-1";
-    }
-  });
-
-  let currencies__items = document.querySelectorAll(".currency__options li");
-  currencies__items.forEach(ele => {
-    ele.addEventListener("click", (e) => {
-        currency__options.classList.add("listed");
-        currency__logo.src = e.currentTarget.children[0].getAttribute("src");
-        currency__logo.alt = e.currentTarget.children[1].textContent;
-
-        currency__name.textContent = e.currentTarget.children[1].textContent;
-        currency__name.setAttribute("the-currency", e.currentTarget.children[1].textContent);
-        currency__name.setAttribute("the-rate", e.currentTarget.children[1].getAttribute("the-rate"));
-
-        let currency__obj__in__localStorage = {
-            name: currency__name.getAttribute("the-currency"),
-            rate: currency__name.getAttribute("the-rate")
-        };
+    currencies__data.forEach((ele) => {
+        let currency = document.createElement("li"),
+            currency__option__logo = document.createElement("img"),
+            currency__option__name = document.createElement("span");
         
-        localStorage.setItem("currency",  JSON.stringify(currency__obj__in__localStorage));
+        currency__option__logo.src = ele.logo__src;
+        currency__option__logo.alt = ele.name;
 
-        // change product currency
-        let product__prices = document.querySelectorAll(".product__price");
-        let current__currency = JSON.parse(localStorage.getItem("currency"));
+        currency__option__name.textContent = ele.name;
+        currency__option__name.setAttribute("the-currency", ele.name);
+        currency__option__name.setAttribute("the-rate", ele.rate);
 
-        product__prices.forEach(ele => {
-            let price = +ele.getAttribute("price-USD");
-            ele.textContent = (price * current__currency.rate).toFixed(2) + " " + current__currency.name;
-        });
-    
+        currency__container.append(currency__options);
+        currency.append(currency__option__logo, currency__option__name);
+        currency__options.append(currency);
+        
+        document.querySelector(".cart__items__preview").classList.remove("listed__cart");
     });
-  });
 
+    // ✅ 1. 货币切换监听器（放在 .then() 内部，currency__options 定义之后）
+    currency__container.addEventListener("click", () => {
+        if(!currency__options.classList.contains("listed")) {
+            currency__options.classList.add("listed");
+            currency__list__ico.className = "fa-solid fa-chevron-up mx-1";
+        } else{
+            currency__options.classList.remove("listed");
+            currency__list__ico.className = "fa-solid fa-chevron-down mx-1";
+        }
+        showToast("Currency changed", "info");
+    });
+
+    // ✅ 2. 货币选项点击监听器（也放在 .then() 内部）
+    let currencies__items = document.querySelectorAll(".currency__options li");
+    currencies__items.forEach(ele => {
+        ele.addEventListener("click", (e) => {
+            currency__options.classList.add("listed");
+            currency__logo.src = e.currentTarget.children[0].getAttribute("src");
+            currency__logo.alt = e.currentTarget.children[1].textContent;
+
+            currency__name.textContent = e.currentTarget.children[1].textContent;
+            currency__name.setAttribute("the-currency", e.currentTarget.children[1].textContent);
+            currency__name.setAttribute("the-rate", e.currentTarget.children[1].getAttribute("the-rate"));
+
+            let currency__obj__in__localStorage = {
+                name: currency__name.getAttribute("the-currency"),
+                rate: currency__name.getAttribute("the-rate")
+            };
+            
+            localStorage.setItem("currency", JSON.stringify(currency__obj__in__localStorage));
+
+            let product__prices = document.querySelectorAll(".product__price");
+            let current__currency = JSON.parse(localStorage.getItem("currency"));
+
+            product__prices.forEach(ele => {
+                let price = +ele.getAttribute("price-USD");
+                ele.textContent = (price * current__currency.rate).toFixed(2) + " " + current__currency.name;
+            });
+        });
+    });
+
+    showToast("Currency rates loaded successfully", "success");
+})
+.catch(error => {
+    console.error("Currency API error:", error);
+    showToast("Failed to load currency rates. Using default rates.", "error");
 });
 
 window.addEventListener("load", () => {
@@ -274,6 +341,7 @@ if(saved__cart__items) {
 }
 
 cart_items_num();
+
 
 cart__ico.onclick = function() {
   let cart__items__preview = document.querySelector(".cart__items__preview"),
@@ -476,6 +544,7 @@ function render_preview(element) {
         }
 
         cart_items_num();
+        showToast("✓ Added to cart!", "success");
       }
 
 
@@ -665,6 +734,7 @@ function display_cart_preview() {
         } 
         // total price
         total_price()
+        showToast("Item removed from cart", "success"); 
     }
     });
 
@@ -730,5 +800,20 @@ function display_cart_preview() {
   });
 
 }
-
+// ========== 货币切换 Toast 修复（独立绑定，不依赖 currency__options）==========
+window.addEventListener("load", function() {
+    // 延迟一点点，确保页面元素都加载好了
+    setTimeout(function() {
+        const currencyContainer = document.querySelector(".currency__container");
+        if (currencyContainer) {
+            // 移除原有监听器（避免重复），然后添加新的
+            currencyContainer.removeEventListener("click", currencyClickHandler);
+            currencyContainer.addEventListener("click", currencyClickHandler);
+        }
+        
+        function currencyClickHandler() {
+            showToast("Currency changed", "info");
+        }
+    }, 500);
+});
 
