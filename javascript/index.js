@@ -53,7 +53,7 @@ banner__next.onclick = function() {
     } else{
         banner_img_slider(0);
     }
-    
+
 }
 
 banner__previous.onclick = function() {
@@ -71,7 +71,7 @@ banner__previous.onclick = function() {
     } else{
         banner_img_slider(images__data.length - 1);
     }
-    
+
 }
 
 function banner_img_slider(index) {
@@ -85,13 +85,13 @@ const search__container = document.querySelector(".search__container");
 const search__container__input = document.querySelector(".search__container input");
 const search__btn = document.querySelector(".search__btn");
 
-let search__results = document.createElement("ul"); 
+let search__results = document.createElement("ul");
 
 search__container__input.oninput = function() {
     search__container.classList.add("focused");
 
     let search__word = new RegExp(this.value, "i");
-    
+
     fetch_data("all_products.json").then(res => {
         let results = new Set();
 
@@ -160,14 +160,14 @@ search__btn.onclick = function() {
                     render_products(ele);
                     display_product_preview(ele);
                     set_product_rating();
-                    location.href = "#products__section"; 
+                    location.href = "#products__section";
                     search__container__input.value = "";
                 });
-                
+
             } else{
                 products__container.classList.add("no__results");
                 products__container.innerHTML = "<h3>No Results</h3>";
-                location.href = "#products__section"; 
+                location.href = "#products__section";
                 search__container__input.value = "";
                 if(search__results){
                     search__results.remove();
@@ -179,7 +179,7 @@ search__btn.onclick = function() {
 
 }
 
-// categories 
+// categories
 const categories__cards__container = document.querySelector('.categories__cards__container');
 const categories__next = document.querySelector('.categories__next');
 const categories__previous = document.querySelector('.categories__previous');
@@ -195,6 +195,7 @@ categories__logos.forEach((ele, i) => {
     category__card__hover.className = "category__card__hover d-flex justify-content-center align-items-center";
     category__card__hover.textContent = ele.name;
     category__card__img.src = ele.src;
+    category__card__img.alt = category_image_alt(ele.name);
 
     categories__cards__container.append(category__card);
     category__card.append(category__card__img);
@@ -211,7 +212,7 @@ category__cards.forEach(ele => {
         category__title.textContent = ele.getAttribute("name");
 
         display_loading_spinner(products__container);
-        
+
         fetch_data("all_products.json").then(res => {
             all_products.forEach(el => {
                 if(el.category == ele.getAttribute("name")) {
@@ -256,7 +257,7 @@ window.addEventListener("load", () => {
                 displayed__items.add(random__num);
             }
         }
-    
+
         displayed__items.forEach(index => {
             render_products([...all_products][index]);
         });
@@ -264,7 +265,7 @@ window.addEventListener("load", () => {
         set_product_rating();
         display_product_preview();
     });
-    
+
 });
 
 // global function
@@ -298,7 +299,7 @@ function render_products(ele) {
 
     product__img__container.className = "product__img__container";
     product__img.setAttribute("src", img_src(ele));
-    product__img.setAttribute("alt", ele.title);
+    product__img.setAttribute("alt", `${ele.title} - product listing photo`);
 
     product__info.className = "product__info p-2 ";
     category__name.className = "category__name";
@@ -328,7 +329,7 @@ function render_products(ele) {
     function product_discount() {
         if(ele.discountPercentage) {
             return ele.discountPercentage + " %"
-        } else 
+        } else
         return ""
     }
 

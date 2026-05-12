@@ -6,11 +6,14 @@ document.querySelector(".loader").style.display = "none";
 
 // scroll to top
 let scroll__top__btn = document.querySelector(".scroll__top__btn");
+scroll__top__btn.setAttribute("tabindex", "-1");
 window.addEventListener("scroll", () => {
 if(scrollY >= 500) {
   scroll__top__btn.classList.add("displayed");
+  scroll__top__btn.setAttribute("tabindex", "0");
 } else{
   scroll__top__btn.classList.remove("displayed");
+  scroll__top__btn.setAttribute("tabindex", "-1");
 }
 });
 
@@ -40,7 +43,7 @@ localStorage.setItem("currency", JSON.stringify(usd));
 }
 
 fetch_data('/api/currency')
-.then(res => {  
+.then(res => {
 
   for(let i in res.rates) {
     if(['EUR', 'USD', 'GBP', 'EGP'].includes(i)) {
@@ -60,7 +63,7 @@ fetch_data('/api/currency')
     let currency = document.createElement("li"),
         currency__option__logo = document.createElement("img"),
         currency__option__name = document.createElement("span");
-    
+
     currency__option__logo.src = ele.logo__src;
     currency__option__logo.alt = ele.name;
 
@@ -71,7 +74,7 @@ fetch_data('/api/currency')
     currency__container.append(currency__options);
     currency.append(currency__option__logo, currency__option__name);
     currency__options.append(currency);
-    
+
     document.querySelector(".cart__items__preview").classList.remove("listed__cart");
   });
 
@@ -100,7 +103,7 @@ fetch_data('/api/currency')
             name: currency__name.getAttribute("the-currency"),
             rate: currency__name.getAttribute("the-rate")
         };
-        
+
         localStorage.setItem("currency",  JSON.stringify(currency__obj__in__localStorage));
 
         // change product currency
@@ -111,7 +114,7 @@ fetch_data('/api/currency')
             let price = +ele.getAttribute("price-USD");
             ele.textContent = (price * current__currency.rate).toFixed(2) + " " + current__currency.name;
         });
-    
+
     });
   });
 
@@ -124,11 +127,11 @@ let currency__options__items = document.querySelectorAll(".currency__options li"
     ele.addEventListener("click", () => {
       let products__price = document.querySelectorAll(".product__price"),
           theCurrency = JSON.parse(localStorage.getItem("currency"));
-      
+
         products__price.forEach(ele => {
             let the_price_USD = parseInt(ele.getAttribute("price-USD"));
             let the_new_price = (the_price_USD * +theCurrency.rate).toFixed(2);
-            
+
             ele.textContent = the_new_price + " " + theCurrency.name;
       });
     });
@@ -171,7 +174,7 @@ const categories__logos = [
 {
   name: "men's products",
   src: "images/Men's products.jpg"
-},    
+},
 {
   name: "women's products",
   src: "images/Women's products.jpg"
@@ -201,6 +204,7 @@ fetch_data("all_products.json").then(res => {
     categories__logos.forEach(el => {
         if(el.name == ele) {
           category__logo.src = el.src;
+          category__logo.alt = category_image_alt(el.name);
         }
     });
 
@@ -248,7 +252,7 @@ fetch_data("all_products.json").then(res => {
     }
   });
 
-}); 
+});
 
 // product preview
 function display_product_preview() {
@@ -256,7 +260,7 @@ function display_product_preview() {
 
   products.forEach(ele => {
     ele.addEventListener("click", () => {
-        // display the container 
+        // display the container
         document.body.classList.add("overlay");
         // render product
         render_preview(ele);
@@ -307,7 +311,7 @@ categories.add(element.category);
 
 function change_currency() {
   let currencies__items = document.querySelectorAll(".currency__options li");
-  
+
   currencies__items.forEach(ele => {
       ele.addEventListener("click", () => {
           let product__prices = document.querySelectorAll(".product__price");
@@ -398,7 +402,7 @@ function render_preview(element) {
       let main__image = document.createElement("img");
 
       main__image.className = 'main__image';
-      main__image.alt = "product-image";
+      main__image.alt = `${product__obj.title} - main product photo`;
       main__image.src = img_src(product__obj);
       main__image__container.append(main__image);
       // image zoom
@@ -449,6 +453,7 @@ function render_preview(element) {
                   images__pagination__container__images.forEach(ele => {ele.classList.remove("active__image")});
                   ele.classList.add("active__image");
                   main__image.src = ele.src;
+                  main__image.alt = ele.alt;
                 }
               });
           }
@@ -456,7 +461,7 @@ function render_preview(element) {
           previous.onclick = function() {
             let active__image = document.querySelector(".active__image"),
               active__image__id = +active__image.getAttribute("image-id");
-              
+
             images__pagination__container__images.forEach(ele => {
               images__pagination__container.scrollLeft -= 20;
 
@@ -464,6 +469,7 @@ function render_preview(element) {
                 images__pagination__container__images.forEach(ele => {ele.classList.remove("active__image")});
                 ele.classList.add("active__image");
                 main__image.src = ele.src;
+                main__image.alt = ele.alt;
               }
             });
           }
@@ -493,7 +499,7 @@ function render_preview(element) {
       }
 
 
-    // functions 
+    // functions
     function product_price_before_discount(){
         if(product__obj.discountPercentage) {
             let currency__value = +document.querySelector(".currency__value").textContent;
@@ -503,12 +509,12 @@ function render_preview(element) {
 
         } else if(product__obj.old_price){
           return product__obj.old_price
-          
+
         } else{
           return "";
         }
     }
-    
+
     function product_stock() {
         if(product__obj.stock) {
             return product__obj.stock;
@@ -524,7 +530,7 @@ function render_preview(element) {
               pagination__img.className = "p-2 pagination__image";
               pagination__img.setAttribute("image-id", i);
               pagination__img.src = el;
-              pagination__img.alt = "image_pagination";
+              pagination__img.alt = `${product__obj.title} - thumbnail ${i + 1} of ${product__obj.images.length}`;
               images__pagination__container.append(pagination__img);
             });
         } else{
@@ -532,7 +538,7 @@ function render_preview(element) {
           pagination__img.className = "p-2 pagination__image";
           pagination__img.setAttribute("image-id", 0);
           pagination__img.src = product__obj.images;
-          pagination__img.alt = "image_pagination";
+          pagination__img.alt = `${product__obj.title} - product thumbnail`;
           images__pagination__container.append(pagination__img);
         }
     }
@@ -540,7 +546,7 @@ function render_preview(element) {
     function pagination_control() {
         let images__pagination__container__images = document.querySelectorAll(".images__pagination__container img"),
           images__pagination__control = document.querySelectorAll(".images__pagination__control");
-        
+
         if(images__pagination__container__images.length <= 2) {
           images__pagination__control.forEach(ele => ele.remove());
         }
@@ -558,6 +564,7 @@ function render_preview(element) {
           // change the main image
           let main__image = document.querySelector(".main__image");
           main__image.src = e.currentTarget.src;
+          main__image.alt = e.currentTarget.alt;
         }
       });
     }
@@ -571,7 +578,7 @@ function display_loading_spinner(container) {
   container.innerHTML = `<section class="products__loader justify-content-center align-items-center">
     <div class="spinner-border text-primary spinner-border-sm"
     role="status">
-    <span class="visually-hidden"></span>
+    <span class="visually-hidden">Loading products</span>
     </div>
   </section>`;
 }
@@ -581,6 +588,12 @@ function cart_items_num() {
   if(localStorage.getItem("cart-items")) {
     cart__items__num.textContent = JSON.parse(localStorage.getItem("cart-items")).length
   }
+}
+
+function category_image_alt(categoryName) {
+  if (!categoryName) return "Product category illustration";
+  const readable = String(categoryName).replace(/-/g, " ");
+  return `Illustration for ${readable} category`;
 }
 
 function img_src(element) {
@@ -596,8 +609,8 @@ function display_cart_preview() {
       items__id = JSON.parse(localStorage.getItem("cart-items")),
       currency = JSON.parse(localStorage.getItem("currency"));
   // display list
-  cart__items__preview.classList.toggle("listed__cart");  
-  // loading 
+  cart__items__preview.classList.toggle("listed__cart");
+  // loading
   cart__items__preview.classList.add("loading");
   cart__items__preview.innerHTML = `
     <div class="cart__loader justify-content-center align-items-center">
@@ -624,7 +637,7 @@ function display_cart_preview() {
     </div>`;
 
     let cart__items = document.querySelector(".cart__items");
-  // render items 
+  // render items
     items__id.forEach(ele => {
       let item = [...all_products][+ele];
       let product__item = document.createElement("div");
@@ -659,6 +672,7 @@ function display_cart_preview() {
           current__price = (currency.rate * item.price).toFixed(2);
 
       cart__item__image.setAttribute("src", img_src(item));
+      cart__item__image.setAttribute("alt", `${item.title} - product in shopping cart`);
       cart__item__image.setAttribute("product-id", ele);
       cart__item__title.textContent = item.title;
       cart__item__price.textContent = `${current__price} ${currency.name}`;
@@ -669,7 +683,7 @@ function display_cart_preview() {
     });
 
 
-// functions  
+// functions
   // delete item
     let del__btn = document.querySelectorAll(".cart__item .fa-xmark");
       cart__items = new Set(JSON.parse(localStorage.getItem("cart-items")));
@@ -683,13 +697,13 @@ function display_cart_preview() {
         localStorage.setItem("cart-items", JSON.stringify([...cart__items]));
         // update num of cart items
         cart_items_num();
-        // no items 
+        // no items
         let product__items = document.querySelectorAll(".cart__item");
         if(product__items.length === 0) {
           cart__items__preview.classList.remove("listed__cart");
           cart__items = new Set();
           localStorage.setItem("cart-items", JSON.stringify([...cart__items]));
-        } 
+        }
         // total price
         total_price()
     }
@@ -698,7 +712,7 @@ function display_cart_preview() {
     // product quantity
     let increase__btn = document.querySelectorAll(".increase__btn"),
         decrease__btn = document.querySelectorAll(".decrease__btn");
-    
+
     increase__btn.forEach(ele => {
       let product__count__num = ele.nextElementSibling;
       ele.onclick = function() {
@@ -708,7 +722,7 @@ function display_cart_preview() {
         total_price();
       }
     });
-    
+
     decrease__btn.forEach(ele => {
       let product__count__num = ele.previousElementSibling;
       ele.onclick = function() {
@@ -717,11 +731,11 @@ function display_cart_preview() {
         }
         total_price();
       }
-    }); 
+    });
 
     // total price
     total_price();
-  
+
     function total_price() {
       let product__count__num = document.querySelectorAll(".product__count span"),
           cart__summary__total = document.querySelector(".cart__summary__total span");
@@ -738,7 +752,7 @@ function display_cart_preview() {
       }, 0);
 
       cart__summary__total.textContent = total.toFixed(2) + ` ${currency.name}`;
-    
+
     }
 
     // open product preview
@@ -746,7 +760,7 @@ function display_cart_preview() {
     cart__item__img__container.forEach(ele => {
       ele.onclick = function(e) {
         cart__items__preview.classList.remove("listed__cart");
-        // display the container 
+        // display the container
         document.body.classList.add("overlay");
         // render product
         render_preview(e.currentTarget);
