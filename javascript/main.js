@@ -329,7 +329,9 @@ function render_preview(element) {
 
   fetch_data("all_products.json").then(res => {
     let product__id = +element.getAttribute("product-id"),
-        product__obj = [...all_products][product__id];
+        product__obj = [...all_products][product__id],
+        current__currency = JSON.parse(localStorage.getItem("currency")),
+        current__price = (product__obj.price * current__currency.rate).toFixed(2);
 
     product__preview.innerHTML = `
     <i class="product__details__close fa-solid fa-xmark p-2"></i>
@@ -349,27 +351,26 @@ function render_preview(element) {
     </div>
 
     <div class="product__details p-2">
-        <h2 class="py-1">${product__obj.title}</h2><hr class="m-0">
+        <h2 class="py-1"></h2><hr class="m-0">
         <div class="product__description mb-4 mt-3">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laboriosam sint itaque saepe beatae, facilis dolorem ipsa ut, accusantium temporibus minima nisi ex porro vel deserunt quae autem voluptates eum ipsam Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laboriosam sint itaque saepe beatae</div>
 
         <div>
             <div class="product__details__price">
                 <span class="the__current__price">
-                    <span class="currency__value" product-price="${(product__obj.price * JSON.parse(localStorage.getItem("currency")).rate).toFixed(2)}">
-                    ${(product__obj.price * JSON.parse(localStorage.getItem("currency")).rate).toFixed(2)}</span>
-                    <span class="currency__name">${JSON.parse(localStorage.getItem("currency")).name}</span>
+                    <span class="currency__value"></span>
+                    <span class="currency__name"></span>
                 </span>
                 <del class="the__old__price mx-2"></del>
             </div>
 
             <p class="availability mb-4">
-                Availability : <span>${product_stock()}</span>
+                Availability : <span></span>
             </p>
 
         </div>
 
         <div class="product__sale mt-5">
-        <button class="add__to__cart py-2 px-3" product-id=${product__obj.id}>
+        <button class="add__to__cart py-2 px-3">
             <i class="fa-solid fa-cart-shopping mx-2  text-decoration-none"></i>
             Add To Cart
         </button>
@@ -377,6 +378,19 @@ function render_preview(element) {
       </div>
 
     </div>`;
+
+    let product__title = product__preview.querySelector(".product__details h2"),
+        currency__value = product__preview.querySelector(".currency__value"),
+        currency__name__preview = product__preview.querySelector(".currency__name"),
+        availability__value = product__preview.querySelector(".availability span"),
+        add__to__cart__btn = product__preview.querySelector(".add__to__cart");
+
+    product__title.textContent = product__obj.title;
+    currency__value.setAttribute("product-price", current__price);
+    currency__value.textContent = current__price;
+    currency__name__preview.textContent = current__currency.name;
+    availability__value.textContent = product_stock();
+    add__to__cart__btn.setAttribute("product-id", product__obj.id);
 
     // elements functions
       // main image
@@ -621,22 +635,35 @@ function display_cart_preview() {
       product__item.innerHTML = `
         <i class="fa-solid fa-xmark"></i>
         <div class="cart__item__img__container p-2">
-          <img src=${img_src(item)} alt="product-image" product-id=${ele}>
+          <img alt="product-image">
         </div>
         <div class="cart__item__info">
-          <h2>${item.title}</h2>
+          <h2></h2>
 
           <div class="cart__item__sale d-flex justify-content-between align-items-center mt-4">
-            <div class="cart__item__price">${(currency.rate * item.price).toFixed(2)} ${currency.name}</div>
+            <div class="cart__item__price"></div>
 
             <div class="product__count d-flex justify-content-between" max-quantity="10">
               <div class="increase__btn d-flex justify-content-center align-items-center py-1"><i class="fa-solid fa-chevron-up"></i></div>
-              <span product-price=${(currency.rate * item.price).toFixed(2)} product-id=${item.id}>1</span>
+              <span>1</span>
               <div class="decrease__btn d-flex justify-content-center align-items-center py-1"><i class="fa-solid fa-chevron-down"></i></div>
             </div>
           </div>
         </div>
       </div>`
+
+      let cart__item__image = product__item.querySelector(".cart__item__img__container img"),
+          cart__item__title = product__item.querySelector(".cart__item__info h2"),
+          cart__item__price = product__item.querySelector(".cart__item__price"),
+          product__count__num = product__item.querySelector(".product__count span"),
+          current__price = (currency.rate * item.price).toFixed(2);
+
+      cart__item__image.setAttribute("src", img_src(item));
+      cart__item__image.setAttribute("product-id", ele);
+      cart__item__title.textContent = item.title;
+      cart__item__price.textContent = `${current__price} ${currency.name}`;
+      product__count__num.setAttribute("product-price", current__price);
+      product__count__num.setAttribute("product-id", item.id);
 
       cart__items.append(product__item);
     });

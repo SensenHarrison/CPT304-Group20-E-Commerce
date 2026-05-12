@@ -286,27 +286,43 @@ function render_products(ele) {
     let div = document.createElement("div");
     div.className = "product position-relative mx-3 mb-4 ";
     div.setAttribute("product-id", ele.id);
-    div.innerHTML = `
-        <div class="product__img__container">
-            <img src=${img_src(ele)} alt="${ele.title}">
-        </div>
 
-        <div class="product__info p-2 ">
-            <span class="category__name">${ele.category}</span>
-            <h3>${ele.title}</h3>
-            <span class="product__price" price-USD="${ele.price}">${product_price()}</span>
-        </div>
+    let product__img__container = document.createElement("div"),
+        product__img = document.createElement("img"),
+        product__info = document.createElement("div"),
+        category__name = document.createElement("span"),
+        product__title = document.createElement("h3"),
+        product__price = document.createElement("span"),
+        product__discount = document.createElement("div"),
+        product__rating = document.createElement("div");
 
-        <div class="product__discount px-1">${product_discount()}</div>
+    product__img__container.className = "product__img__container";
+    product__img.setAttribute("src", img_src(ele));
+    product__img.setAttribute("alt", ele.title);
 
-        <div class="product__rating" rate=${product_rate()}>
-            <i class="fa-regular fa-star"></i>
-            <i class="fa-regular fa-star"></i>
-            <i class="fa-regular fa-star"></i>
-            <i class="fa-regular fa-star"></i>
-            <i class="fa-regular fa-star"></i>
-    </div>`;
-        
+    product__info.className = "product__info p-2 ";
+    category__name.className = "category__name";
+    category__name.textContent = ele.category;
+    product__title.textContent = ele.title;
+    product__price.className = "product__price";
+    product__price.setAttribute("price-USD", ele.price);
+    product__price.textContent = product_price();
+
+    product__discount.className = "product__discount px-1";
+    product__discount.textContent = product_discount();
+
+    product__rating.className = "product__rating";
+    product__rating.setAttribute("rate", product_rate());
+    for(let i = 0; i < 5; i++) {
+        let rating__icon = document.createElement("i");
+        rating__icon.className = "fa-regular fa-star";
+        product__rating.append(rating__icon);
+    }
+
+    product__img__container.append(product__img);
+    product__info.append(category__name, product__title, product__price);
+    div.append(product__img__container, product__info, product__discount, product__rating);
+
     products__container.append(div);
 
     function product_discount() {
@@ -316,7 +332,6 @@ function render_products(ele) {
         return ""
     }
 
-    let product__discount = document.querySelector(".product__discount");
     if(!product__discount.textContent) {
         product__discount.classList.remove("px-1")
     }
