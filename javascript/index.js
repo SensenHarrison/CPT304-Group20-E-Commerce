@@ -195,6 +195,7 @@ categories__logos.forEach((ele, i) => {
     category__card__hover.className = "category__card__hover d-flex justify-content-center align-items-center";
     category__card__hover.textContent = ele.name;
     category__card__img.src = ele.src;
+    category__card__img.alt = category_image_alt(ele.name);
 
     categories__cards__container.append(category__card);
     category__card.append(category__card__img);
@@ -288,7 +289,7 @@ function render_products(ele) {
     div.setAttribute("product-id", ele.id);
     div.innerHTML = `
         <div class="product__img__container">
-            <img src=${img_src(ele)} alt="${ele.title}">
+            <img src=${img_src(ele)} alt="${escape_html_attr(ele.title + " — product listing photo")}">
         </div>
 
         <div class="product__info p-2 ">

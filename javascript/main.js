@@ -6,11 +6,14 @@ document.querySelector(".loader").style.display = "none";
 
 // scroll to top
 let scroll__top__btn = document.querySelector(".scroll__top__btn");
+scroll__top__btn.setAttribute("tabindex", "-1");
 window.addEventListener("scroll", () => {
 if(scrollY >= 500) {
   scroll__top__btn.classList.add("displayed");
+  scroll__top__btn.setAttribute("tabindex", "0");
 } else{
   scroll__top__btn.classList.remove("displayed");
+  scroll__top__btn.setAttribute("tabindex", "-1");
 }
 });
 
@@ -201,6 +204,7 @@ fetch_data("all_products.json").then(res => {
     categories__logos.forEach(el => {
         if(el.name == ele) {
           category__logo.src = el.src;
+          category__logo.alt = category_image_alt(el.name);
         }
     });
 
@@ -384,7 +388,7 @@ function render_preview(element) {
       let main__image = document.createElement("img");
 
       main__image.className = 'main__image';
-      main__image.alt = "product-image";
+      main__image.alt = `${product__obj.title} — main product photo`;
       main__image.src = img_src(product__obj);
       main__image__container.append(main__image);
       // image zoom
@@ -435,6 +439,7 @@ function render_preview(element) {
                   images__pagination__container__images.forEach(ele => {ele.classList.remove("active__image")});
                   ele.classList.add("active__image");
                   main__image.src = ele.src;
+                  main__image.alt = ele.alt;
                 }
               });
           }
@@ -450,6 +455,7 @@ function render_preview(element) {
                 images__pagination__container__images.forEach(ele => {ele.classList.remove("active__image")});
                 ele.classList.add("active__image");
                 main__image.src = ele.src;
+                main__image.alt = ele.alt;
               }
             });
           }
@@ -510,7 +516,7 @@ function render_preview(element) {
               pagination__img.className = "p-2 pagination__image";
               pagination__img.setAttribute("image-id", i);
               pagination__img.src = el;
-              pagination__img.alt = "image_pagination";
+              pagination__img.alt = `${product__obj.title} — thumbnail ${i + 1} of ${product__obj.images.length}`;
               images__pagination__container.append(pagination__img);
             });
         } else{
@@ -518,7 +524,7 @@ function render_preview(element) {
           pagination__img.className = "p-2 pagination__image";
           pagination__img.setAttribute("image-id", 0);
           pagination__img.src = product__obj.images;
-          pagination__img.alt = "image_pagination";
+          pagination__img.alt = `${product__obj.title} — product thumbnail`;
           images__pagination__container.append(pagination__img);
         }
     }
@@ -544,6 +550,7 @@ function render_preview(element) {
           // change the main image
           let main__image = document.querySelector(".main__image");
           main__image.src = e.currentTarget.src;
+          main__image.alt = e.currentTarget.alt;
         }
       });
     }
@@ -557,7 +564,7 @@ function display_loading_spinner(container) {
   container.innerHTML = `<section class="products__loader justify-content-center align-items-center">
     <div class="spinner-border text-primary spinner-border-sm"
     role="status">
-    <span class="visually-hidden"></span>
+    <span class="visually-hidden">Loading products</span>
     </div>
   </section>`;
 }
@@ -567,6 +574,21 @@ function cart_items_num() {
   if(localStorage.getItem("cart-items")) {
     cart__items__num.textContent = JSON.parse(localStorage.getItem("cart-items")).length
   }
+}
+
+function escape_html_attr(value) {
+  if (value == null || value === undefined) return "";
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/'/g, "&#39;");
+}
+
+function category_image_alt(categoryName) {
+  if (!categoryName) return "Product category illustration";
+  const readable = String(categoryName).replace(/-/g, " ");
+  return `Illustration for ${readable} category`;
 }
 
 function img_src(element) {
@@ -621,7 +643,7 @@ function display_cart_preview() {
       product__item.innerHTML = `
         <i class="fa-solid fa-xmark"></i>
         <div class="cart__item__img__container p-2">
-          <img src=${img_src(item)} alt="product-image" product-id=${ele}>
+          <img src=${img_src(item)} alt="${escape_html_attr(item.title + " — product in shopping cart")}" product-id=${ele}>
         </div>
         <div class="cart__item__info">
           <h2>${item.title}</h2>

@@ -8,6 +8,10 @@ $sec-color: #474747;
 
 $green-color: #83a900;
 
+// WCAG-friendly green for primary text buttons (white text ≥ 4.5:1)
+$green-color-btn-accessible: #3d5a00;
+$green-color-btn-accessible-hover: #324a00;
+
 $green-hover: #c0f3072a;
 
 $border-color:#e4e2e0;
@@ -104,7 +108,7 @@ main{
   right: 3%;
   bottom: 3%;
   z-index: 1000;
-  background-color: $green-color;
+  background-color: $green-color-btn-accessible;
   width: 40px;
   height: 40px;
   border-radius: 50%;

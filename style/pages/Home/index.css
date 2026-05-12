@@ -150,7 +150,7 @@ main {
   right: 3%;
   bottom: 3%;
   z-index: 1000;
-  background-color: #83a900;
+  background-color: #3d5a00;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -298,11 +298,11 @@ main {
   color: rgba(0, 0, 0, 0.6);
 }
 .overlay .product__preview .product__details .availability span {
-  color: #83a900;
+  color: #3d5a00;
   font-weight: 500;
 }
 .overlay .product__preview .product__details .add__to__cart {
-  background-color: #83a900;
+  background-color: #3d5a00;
   position: relative;
   border-radius: 7px;
   color: #FFF;
@@ -325,7 +325,7 @@ main {
   display: none;
 }
 .overlay .product__preview .product__details .add__to__cart:hover {
-  background-color: #83a900;
+  background-color: #324a00;
 }
 .overlay .product__preview .product__details .add__to__cart:hover::after {
   display: block;
@@ -520,7 +520,7 @@ main {
   width: 33.3333333333%;
 }
 .cart__items__preview .cart__items .cart__item__info .product__count div {
-  background-color: #83a900;
+  background-color: #3d5a00;
   font-size: 12px;
   cursor: pointer;
 }
@@ -528,7 +528,7 @@ main {
   color: #FFF;
 }
 .cart__items__preview .cart__items .cart__item__info .cart__item__price {
-  color: #83a900;
+  color: #3d5a00;
   font-weight: 600;
   font-size: 17px;
 }
@@ -551,12 +551,12 @@ main {
   background-color: #e4e2e0;
 }
 .cart__items__preview .cart__summary .cart__summary__total span {
-  color: #83a900;
+  color: #3d5a00;
   font-size: 17px;
   font-weight: 600;
 }
 .cart__items__preview .cart__summary .view__cart__btn {
-  background-color: #83a900;
+  background-color: #3d5a00;
   position: relative;
   border-radius: 15px;
   color: #FFF;
@@ -579,7 +579,7 @@ main {
   display: none;
 }
 .cart__items__preview .cart__summary .view__cart__btn:hover {
-  background-color: #83a900;
+  background-color: #324a00;
 }
 .cart__items__preview .cart__summary .view__cart__btn:hover::after {
   display: block;
@@ -876,7 +876,7 @@ header .search__container input {
 }
 header .search__container .search__btn {
   width: 18%;
-  background-color: #83a900;
+  background-color: #3d5a00;
   position: relative;
   border-radius: 20px;
   color: #FFF;
@@ -912,13 +912,26 @@ header .header__icons {
   justify-content: space-between;
   align-items: center;
 }
-header .header__icons i, header .header__icons a {
+header .header__icons i, header .header__icons a, header .header__icons .user__btn {
   cursor: pointer;
   font-size: 21px;
   transition: all 0.2s linear;
   color: #000;
 }
-header .header__icons i:hover, header .header__icons a:hover {
+header .header__icons .user__btn {
+  background: none;
+  border: none;
+  padding: 0;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+header .header__icons .user__btn:focus-visible {
+  outline: 2px solid #3d5a00;
+  outline-offset: 2px;
+}
+header .header__icons i:hover, header .header__icons a:hover, header .header__icons .user__btn:hover {
   transform: rotateY(180deg);
   color: #83a900;
 }
@@ -932,7 +945,7 @@ header .header__icons .cart__items__num {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background-color: #83a900;
+  background-color: #3d5a00;
   font-size: 10px;
   color: #FFF;
   position: absolute;
@@ -965,7 +978,7 @@ header .header__icons .cart__items__num {
 }
 .menubar__section .categories__btn {
   width: 100%;
-  background-color: #83a900;
+  background-color: #3d5a00;
   position: relative;
   border-radius: 30px;
   color: #FFF;
@@ -991,7 +1004,7 @@ header .header__icons .cart__items__num {
   display: none;
 }
 .menubar__section .categories__btn:hover {
-  background-color: #83a900;
+  background-color: #324a00;
 }
 .menubar__section .categories__btn:hover::after {
   display: block;
@@ -1012,7 +1025,7 @@ header .header__icons .cart__items__num {
   color: #FFF;
 }
 .menubar__section .menubar__links > a:hover {
-  background-color: #83a900;
+  background-color: #3d5a00;
   border-radius: 20px;
   transition: background-color 0.2s linear;
 }
@@ -1034,7 +1047,7 @@ header .header__icons .cart__items__num {
   font-weight: 500;
 }
 .categories__options li:hover {
-  background-color: #83a900;
+  background-color: #3d5a00;
 }
 .categories__options li:hover a {
   color: #FFF;
@@ -1077,7 +1090,7 @@ header .header__icons .cart__items__num {
   }
   header .search__container .search__btn {
     width: 26%;
-    background-color: #83a900;
+    background-color: #3d5a00;
     position: relative;
     border-radius: 30px;
     color: #FFF;
@@ -1111,7 +1124,7 @@ header .header__icons .cart__items__num {
   header .header__icons {
     width: 12%;
   }
-  header .header__icons i, header .header__icons a {
+  header .header__icons i, header .header__icons a, header .header__icons .user__btn {
     font-size: 18px;
     margin: 0 5px;
   }
@@ -1127,7 +1140,7 @@ header .header__icons .cart__items__num {
     align-items: center;
   }
   .menubar__section .categories__btn {
-    background-color: #83a900;
+    background-color: #3d5a00;
     position: relative;
     border-radius: 50px;
     color: #FFF;
@@ -1152,7 +1165,7 @@ header .header__icons .cart__items__num {
     display: none;
   }
   .menubar__section .categories__btn:hover {
-    background-color: #83a900;
+    background-color: #324a00;
   }
   .menubar__section .categories__btn:hover::after {
     display: block;
@@ -1211,7 +1224,7 @@ header .header__icons .cart__items__num {
     width: 100%;
   }
   .menubar__section .categories__btn {
-    background-color: #83a900;
+    background-color: #3d5a00;
     position: relative;
     border-radius: 50px;
     color: #FFF;
@@ -1234,7 +1247,7 @@ header .header__icons .cart__items__num {
     display: none;
   }
   .menubar__section .categories__btn:hover {
-    background-color: #83a900;
+    background-color: #324a00;
   }
   .menubar__section .categories__btn:hover::after {
     display: block;
@@ -1399,7 +1412,7 @@ main {
   right: 3%;
   bottom: 3%;
   z-index: 1000;
-  background-color: #83a900;
+  background-color: #3d5a00;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -1547,11 +1560,11 @@ main {
   color: rgba(0, 0, 0, 0.6);
 }
 .overlay .product__preview .product__details .availability span {
-  color: #83a900;
+  color: #3d5a00;
   font-weight: 500;
 }
 .overlay .product__preview .product__details .add__to__cart {
-  background-color: #83a900;
+  background-color: #3d5a00;
   position: relative;
   border-radius: 7px;
   color: #FFF;
@@ -1574,7 +1587,7 @@ main {
   display: none;
 }
 .overlay .product__preview .product__details .add__to__cart:hover {
-  background-color: #83a900;
+  background-color: #324a00;
 }
 .overlay .product__preview .product__details .add__to__cart:hover::after {
   display: block;
@@ -1769,7 +1782,7 @@ main {
   width: 33.3333333333%;
 }
 .cart__items__preview .cart__items .cart__item__info .product__count div {
-  background-color: #83a900;
+  background-color: #3d5a00;
   font-size: 12px;
   cursor: pointer;
 }
@@ -1777,7 +1790,7 @@ main {
   color: #FFF;
 }
 .cart__items__preview .cart__items .cart__item__info .cart__item__price {
-  color: #83a900;
+  color: #3d5a00;
   font-weight: 600;
   font-size: 17px;
 }
@@ -1800,12 +1813,12 @@ main {
   background-color: #e4e2e0;
 }
 .cart__items__preview .cart__summary .cart__summary__total span {
-  color: #83a900;
+  color: #3d5a00;
   font-size: 17px;
   font-weight: 600;
 }
 .cart__items__preview .cart__summary .view__cart__btn {
-  background-color: #83a900;
+  background-color: #3d5a00;
   position: relative;
   border-radius: 15px;
   color: #FFF;
@@ -1828,7 +1841,7 @@ main {
   display: none;
 }
 .cart__items__preview .cart__summary .view__cart__btn:hover {
-  background-color: #83a900;
+  background-color: #324a00;
 }
 .cart__items__preview .cart__summary .view__cart__btn:hover::after {
   display: block;
@@ -2133,7 +2146,7 @@ footer p {
 .categories__section .categories__cards__container > div .category__card__hover {
   position: absolute;
   inset: 0;
-  background-color: rgba(131, 169, 0, 0.7);
+  background-color: rgba(61, 90, 0, 0.9);
   font-size: 1.3rem;
   color: #FFF;
   text-transform: capitalize;
@@ -2195,13 +2208,13 @@ footer p {
   transform: translateX(-50%);
 }
 .products__section .products__container > div .product__rating i {
-  color: #83a900;
+  color: #3d5a00;
 }
 .products__section .products__container > div .product__discount {
   position: absolute;
   left: 5%;
   top: 5%;
-  background-color: #83a900;
+  background-color: #3d5a00;
   color: #FFF;
   border-radius: 15px;
   font-size: 12px;
@@ -2238,7 +2251,7 @@ footer p {
   margin-bottom: 10px;
 }
 .products__section .products__container > div .product__price {
-  color: #83a900;
+  color: #3d5a00;
   font-weight: 600;
 }
 .products__section .products__container > div h3 {

@@ -92,6 +92,7 @@ header{
         .search__btn{
             width: 18%;
             @include btn(rgba(109, 109, 109, 0.164), $sec-color, 20px);
+            background-color: $green-color-btn-accessible;
         }
     }
     .search__container.focused{
@@ -103,7 +104,7 @@ header{
         justify-content: space-between;
         align-items: center;
     // children
-        i, a{
+        i, a, .user__btn{
             cursor: pointer;
             font-size: 21px;
             transition: all 0.2s linear;
@@ -111,6 +112,19 @@ header{
             &:hover{
                 transform: rotateY(180deg);
                 color: $green-color;
+            }
+        }
+        .user__btn{
+            background: none;
+            border: none;
+            padding: 0;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            &:focus-visible {
+                outline: 2px solid $green-color-btn-accessible;
+                outline-offset: 2px;
             }
         }
         .cart{
@@ -123,7 +137,7 @@ header{
             justify-content: center;
             align-items: center;
             border-radius: 50%;
-            background-color: $green-color;
+            background-color: $green-color-btn-accessible;
             font-size: 10px;
             color: #FFF;
             position: absolute;
@@ -160,6 +174,10 @@ header{
     .categories__btn{
         width: 100%;
         @include btn($green-hover, $green-color, 30px);
+        background-color: $green-color-btn-accessible;
+        &:hover {
+            background-color: $green-color-btn-accessible-hover;
+        }
         font-size: 18px;
         font-weight: 500;
         padding: {
@@ -257,6 +275,7 @@ header{
             .search__btn{
                 width: 26%;
                 @include btn(rgba(109, 109, 109, 0.164), $sec-color, 30px);
+                background-color: $green-color-btn-accessible;
                 font-size: 14px;
                 i{
                     font-size: 10px;
@@ -266,7 +285,7 @@ header{
         .header__icons{
             width: 12%;
         // children
-            i, a{
+            i, a, .user__btn{
                 font-size: 18px;
                 margin: 0 5px;
             }
@@ -288,6 +307,10 @@ header{
         }
         .categories__btn{
             @include btn($green-hover, $green-color, 50px);
+            background-color: $green-color-btn-accessible;
+            &:hover {
+                background-color: $green-color-btn-accessible-hover;
+            }
             font-size: 16px;
             padding: {
                 top: 10px;
@@ -364,6 +387,10 @@ header{
             }
             .categories__btn{
                 @include btn($green-hover, $green-color, 50px);
+                background-color: $green-color-btn-accessible;
+                &:hover {
+                    background-color: $green-color-btn-accessible-hover;
+                }
                 font-size: 18px;
                 i{
                     font-size: 14px;
