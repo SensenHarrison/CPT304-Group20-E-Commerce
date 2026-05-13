@@ -1,4 +1,20 @@
-// loading page
+// ========== Toast 通知系统 ==========
+function showToast(message, type = "info") {
+    let toastContainer = document.querySelector(".toast-container");
+    if (!toastContainer) {
+        toastContainer = document.createElement("div");
+        toastContainer.className = "toast-container";
+        toastContainer.style.cssText = "position: fixed; bottom: 20px; right: 20px; z-index: 9999;";
+        document.body.appendChild(toastContainer);
+    }
+    const toast = document.createElement("div");
+    let bgColor = type === "success" ? "#28a745" : type === "error" ? "#dc3545" : "#17a2b8";
+    toast.style.cssText = `background: ${bgColor}; color: white; padding: 12px 20px; margin-top: 10px; border-radius: 8px; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);`;
+    toast.textContent = message;
+    toastContainer.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
+// ========== Toast 系统结束 ==========// loading page
 window.addEventListener("load", () => {
 document.querySelector("main").style.display = "block";
 document.querySelector(".loader").style.display = "none";
@@ -86,6 +102,7 @@ fetch_data('/api/currency')
         currency__options.classList.remove("listed");
         currency__list__ico.className = "fa-solid fa-chevron-down mx-1";
     }
+    showToast("Currency changed", "info");
   });
 
   let currencies__items = document.querySelectorAll(".currency__options li");
@@ -118,7 +135,12 @@ fetch_data('/api/currency')
     });
   });
 
+})
+.catch(error => {
+    console.error("Currency API error:", error);
+    showToast("Failed to load currency rates.", "error");
 });
+
 
 window.addEventListener("load", () => {
 let currency__options__items = document.querySelectorAll(".currency__options li");
@@ -496,6 +518,7 @@ function render_preview(element) {
         }
 
         cart_items_num();
+        showToast("✓ Added to cart!", "success");
       }
 
 
@@ -706,6 +729,7 @@ function display_cart_preview() {
         }
         // total price
         total_price()
+        showToast("Item removed from cart", "success");
     }
     });
 
