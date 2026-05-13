@@ -53,7 +53,7 @@ banner__next.onclick = function() {
     } else{
         banner_img_slider(0);
     }
-    
+
 }
 
 banner__previous.onclick = function() {
@@ -71,7 +71,7 @@ banner__previous.onclick = function() {
     } else{
         banner_img_slider(images__data.length - 1);
     }
-    
+
 }
 
 function banner_img_slider(index) {
@@ -85,13 +85,13 @@ const search__container = document.querySelector(".search__container");
 const search__container__input = document.querySelector(".search__container input");
 const search__btn = document.querySelector(".search__btn");
 
-let search__results = document.createElement("ul"); 
+let search__results = document.createElement("ul");
 
 search__container__input.oninput = function() {
     search__container.classList.add("focused");
 
     let search__word = new RegExp(this.value, "i");
-    
+
     fetch_data("all_products.json").then(res => {
         let results = new Set();
 
@@ -160,14 +160,14 @@ search__btn.onclick = function() {
                     render_products(ele);
                     display_product_preview(ele);
                     set_product_rating();
-                    location.href = "#products__section"; 
+                    location.href = "#products__section";
                     search__container__input.value = "";
                 });
-                
+
             } else{
                 products__container.classList.add("no__results");
                 products__container.innerHTML = "<h3>No Results</h3>";
-                location.href = "#products__section"; 
+                location.href = "#products__section";
                 search__container__input.value = "";
                 if(search__results){
                     search__results.remove();
@@ -179,7 +179,7 @@ search__btn.onclick = function() {
 
 }
 
-// categories 
+// categories
 const categories__cards__container = document.querySelector('.categories__cards__container');
 const categories__next = document.querySelector('.categories__next');
 const categories__previous = document.querySelector('.categories__previous');
@@ -212,7 +212,7 @@ category__cards.forEach(ele => {
         category__title.textContent = ele.getAttribute("name");
 
         display_loading_spinner(products__container);
-        
+
         fetch_data("all_products.json").then(res => {
             all_products.forEach(el => {
                 if(el.category == ele.getAttribute("name")) {
@@ -257,7 +257,7 @@ window.addEventListener("load", () => {
                 displayed__items.add(random__num);
             }
         }
-    
+
         displayed__items.forEach(index => {
             render_products([...all_products][index]);
         });
@@ -265,7 +265,7 @@ window.addEventListener("load", () => {
         set_product_rating();
         display_product_preview();
     });
-    
+
 });
 
 // global function
@@ -287,37 +287,52 @@ function render_products(ele) {
     let div = document.createElement("div");
     div.className = "product position-relative mx-3 mb-4 ";
     div.setAttribute("product-id", ele.id);
-    div.innerHTML = `
-        <div class="product__img__container">
-            <img src=${img_src(ele)} alt="${escape_html_attr(ele.title + " — product listing photo")}">
-        </div>
 
-        <div class="product__info p-2 ">
-            <span class="category__name">${ele.category}</span>
-            <h3>${ele.title}</h3>
-            <span class="product__price" price-USD="${ele.price}">${product_price()}</span>
-        </div>
+    let product__img__container = document.createElement("div"),
+        product__img = document.createElement("img"),
+        product__info = document.createElement("div"),
+        category__name = document.createElement("span"),
+        product__title = document.createElement("h3"),
+        product__price = document.createElement("span"),
+        product__discount = document.createElement("div"),
+        product__rating = document.createElement("div");
 
-        <div class="product__discount px-1">${product_discount()}</div>
+    product__img__container.className = "product__img__container";
+    product__img.setAttribute("src", img_src(ele));
+    product__img.setAttribute("alt", `${ele.title} - product listing photo`);
 
-        <div class="product__rating" rate=${product_rate()}>
-            <i class="fa-regular fa-star"></i>
-            <i class="fa-regular fa-star"></i>
-            <i class="fa-regular fa-star"></i>
-            <i class="fa-regular fa-star"></i>
-            <i class="fa-regular fa-star"></i>
-    </div>`;
-        
+    product__info.className = "product__info p-2 ";
+    category__name.className = "category__name";
+    category__name.textContent = ele.category;
+    product__title.textContent = ele.title;
+    product__price.className = "product__price";
+    product__price.setAttribute("price-USD", ele.price);
+    product__price.textContent = product_price();
+
+    product__discount.className = "product__discount px-1";
+    product__discount.textContent = product_discount();
+
+    product__rating.className = "product__rating";
+    product__rating.setAttribute("rate", product_rate());
+    for(let i = 0; i < 5; i++) {
+        let rating__icon = document.createElement("i");
+        rating__icon.className = "fa-regular fa-star";
+        product__rating.append(rating__icon);
+    }
+
+    product__img__container.append(product__img);
+    product__info.append(category__name, product__title, product__price);
+    div.append(product__img__container, product__info, product__discount, product__rating);
+
     products__container.append(div);
 
     function product_discount() {
         if(ele.discountPercentage) {
             return ele.discountPercentage + " %"
-        } else 
+        } else
         return ""
     }
 
-    let product__discount = document.querySelector(".product__discount");
     if(!product__discount.textContent) {
         product__discount.classList.remove("px-1")
     }
