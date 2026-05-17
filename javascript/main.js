@@ -1,4 +1,37 @@
 // ========== Toast 通知系统 ==========
+const COOKIE_CONSENT_KEY = "cookie-consent";
+
+function setupCookieBanner() {
+    const banner = document.querySelector(".cookie__banner");
+    if(!banner) return;
+
+    const acceptButton = banner.querySelector(".cookie__accept__btn");
+    const rejectButton = banner.querySelector(".cookie__reject__btn");
+    const policyButton = banner.querySelector(".cookie__settings__btn");
+
+    if(!localStorage.getItem(COOKIE_CONSENT_KEY)) {
+        banner.hidden = false;
+    }
+
+    function saveCookieChoice(choice) {
+        localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify({
+            choice,
+            date: new Date().toISOString()
+        }));
+        banner.hidden = true;
+        showToast(choice === "accepted" ? "Cookie preferences saved." : "Non-essential cookies rejected.", "success");
+    }
+
+    acceptButton?.addEventListener("click", () => saveCookieChoice("accepted"));
+    rejectButton?.addEventListener("click", () => saveCookieChoice("rejected"));
+    policyButton?.addEventListener("click", () => {
+        window.location.href = "privacy-policy.html";
+    });
+}
+
+document.addEventListener("DOMContentLoaded", setupCookieBanner);
+
+// ========== Toast 通知系统 ==========
 function showToast(message, type = "info") {
     let toastContainer = document.querySelector(".toast-container");
     if (!toastContainer) {
