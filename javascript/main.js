@@ -167,43 +167,43 @@ const all_products = new Set();
 const categories__logos = [
 {
   name: "smartphones",
-  src: "images/samrtphones.jpg"
+  src: "images/local-product-images/samrtphones.jpg"
 },
 {
   name: "electronics",
-  src: "images/electronics.jpg"
+  src: "images/local-product-images/electronics.jpg"
 },
 {
   name: "laptops",
-  src: "images/laptops.jpg"
+  src: "images/local-product-images/laptops.jpg"
 },
 {
   name: "watches",
-  src: "images/watches.webp"
+  src: "images/local-product-images/watches.webp"
 },
 {
   name: "shoes",
-  src: "images/shoes.png"
+  src: "images/local-product-images/shoes.png"
 },
 {
   name: "fragrances",
-  src: "images/Fragrances.jpg"
+  src: "images/local-product-images/Fragrances.jpg"
 },
 {
   name: "skincare",
-  src: "images/skincare.jpg"
+  src: "images/local-product-images/skincare.jpg"
 },,
 {
   name: "men's products",
-  src: "images/Men's products.jpg"
+  src: "images/local-product-images/Men's products.jpg"
 },
 {
   name: "women's products",
-  src: "images/Women's products.jpg"
+  src: "images/local-product-images/Women's products.jpg"
 },
 {
   name: "jewelery",
-  src: "images/jewelry.webp"
+  src: "images/local-product-images/jewelry.webp"
 }
 ];
 
@@ -634,27 +634,27 @@ function fallback_img_src(element) {
   const category = element?.category || "";
   const fallbackImages = {
     "smartphones": "images/samrtphones.jpg",
-    "electronics": "images/electronics 1.png",
-    "laptops": "images/laptops 1.png",
-    "watches": "images/watches1.png",
-    "shoes": "images/shoes1.png",
-    "fragrances": "images/fragrances 1.png",
-    "skincare": "images/skincare1.png",
-    "men's products": "images/men's products1.png",
-    "women's products": "images/women's products1.png",
+    "electronics": "images/local-product-images/electronics 1.png",
+    "laptops": "images/local-product-images/laptops 1.png",
+    "watches": "images/local-product-images/watches1.png",
+    "shoes": "images/local-product-images/shoes1.png",
+    "fragrances": "images/local-product-images/fragrances 1.png",
+    "skincare": "images/local-product-images/skincare1.png",
+    "men's products": "images/local-product-images/men's products1.png",
+    "women's products": "images/local-product-images/women's products1.png",
     "jewelery": "images/jewelry.webp",
-    "Hoodies": "images/men's products1.png",
-    "Jackets": "images/men's products 2.png",
-    "Pants": "images/men's products2.png",
-    "T-shirt": "images/men's products 5.png",
-    "T-shirts": "images/men's products 5.png"
+    "Hoodies": "images/local-product-images/men's products1.png",
+    "Jackets": "images/local-product-images/men's products 2.png",
+    "Pants": "images/local-product-images/men's products2.png",
+    "T-shirt": "images/local-product-images/men's products 5.png",
+    "T-shirts": "images/local-product-images/men's products 5.png"
   };
 
   const title = String(element?.title || "").trim();
   const titleFallbacks = {
-    "WD 4TB Gaming Drive Works with Playstation 4 Portable External Hard Drive": "images/Hard Drive.png",
-    "Leather Strap Skeleton Watch": "images/Leather Strap Skeleton Watch.png",
-    "BIYLACLESEN Women's 3-in-1 Snowboard Jacket Winter Coats": "images/winterjacket.png"
+    "WD 4TB Gaming Drive Works with Playstation 4 Portable External Hard Drive": "images/local-product-images/Hard Drive.png",
+    "Leather Strap Skeleton Watch": "images/local-product-images/Leather Strap Skeleton Watch.png",
+    "BIYLACLESEN Women's 3-in-1 Snowboard Jacket Winter Coats": "images/local-product-images/winterjacket.png"
   };
 
   return titleFallbacks[title] || fallbackImages[category] || "images/images.jpg";
