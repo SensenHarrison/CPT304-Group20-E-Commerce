@@ -300,6 +300,7 @@ function render_products(ele) {
     product__img__container.className = "product__img__container";
     product__img.setAttribute("src", img_src(ele));
     product__img.setAttribute("alt", `${ele.title} - product listing photo`);
+    set_image_fallback(product__img, ele);
 
     product__info.className = "product__info p-2 ";
     category__name.className = "category__name";

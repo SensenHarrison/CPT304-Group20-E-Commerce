@@ -426,6 +426,7 @@ function render_preview(element) {
       main__image.className = 'main__image';
       main__image.alt = `${product__obj.title} - main product photo`;
       main__image.src = img_src(product__obj);
+      set_image_fallback(main__image, product__obj);
       main__image__container.append(main__image);
       // image zoom
       main__image__container.onmousemove = function(e) {
@@ -554,6 +555,7 @@ function render_preview(element) {
               pagination__img.setAttribute("image-id", i);
               pagination__img.src = el;
               pagination__img.alt = `${product__obj.title} - thumbnail ${i + 1} of ${product__obj.images.length}`;
+              set_image_fallback(pagination__img, product__obj);
               images__pagination__container.append(pagination__img);
             });
         } else{
@@ -562,6 +564,7 @@ function render_preview(element) {
           pagination__img.setAttribute("image-id", 0);
           pagination__img.src = product__obj.images;
           pagination__img.alt = `${product__obj.title} - product thumbnail`;
+          set_image_fallback(pagination__img, product__obj);
           images__pagination__container.append(pagination__img);
         }
     }
@@ -625,6 +628,45 @@ function img_src(element) {
   } else{
       return element.images;
   }
+}
+
+function fallback_img_src(element) {
+  const category = element?.category || "";
+  const fallbackImages = {
+    "smartphones": "images/samrtphones.jpg",
+    "electronics": "images/electronics 1.png",
+    "laptops": "images/laptops 1.png",
+    "watches": "images/watches1.png",
+    "shoes": "images/shoes1.png",
+    "fragrances": "images/fragrances 1.png",
+    "skincare": "images/skincare1.png",
+    "men's products": "images/men's products1.png",
+    "women's products": "images/women's products1.png",
+    "jewelery": "images/jewelry.webp",
+    "Hoodies": "images/men's products1.png",
+    "Jackets": "images/men's products 2.png",
+    "Pants": "images/men's products2.png",
+    "T-shirt": "images/men's products 5.png",
+    "T-shirts": "images/men's products 5.png"
+  };
+
+  const title = String(element?.title || "").trim();
+  const titleFallbacks = {
+    "WD 4TB Gaming Drive Works with Playstation 4 Portable External Hard Drive": "images/Hard Drive.png",
+    "Leather Strap Skeleton Watch": "images/Leather Strap Skeleton Watch.png",
+    "BIYLACLESEN Women's 3-in-1 Snowboard Jacket Winter Coats": "images/winterjacket.png"
+  };
+
+  return titleFallbacks[title] || fallbackImages[category] || "images/images.jpg";
+}
+
+function set_image_fallback(imageElement, product) {
+  imageElement.addEventListener("error", () => {
+      const fallbackSrc = fallback_img_src(product);
+      if(!imageElement.src.endsWith(fallbackSrc)) {
+          imageElement.src = fallbackSrc;
+      }
+  });
 }
 
 function display_cart_preview() {
@@ -696,6 +738,7 @@ function display_cart_preview() {
 
       cart__item__image.setAttribute("src", img_src(item));
       cart__item__image.setAttribute("alt", `${item.title} - product in shopping cart`);
+      set_image_fallback(cart__item__image, item);
       cart__item__image.setAttribute("product-id", ele);
       cart__item__title.textContent = item.title;
       cart__item__price.textContent = `${current__price} ${currency.name}`;
