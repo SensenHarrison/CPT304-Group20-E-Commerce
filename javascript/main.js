@@ -167,43 +167,43 @@ const all_products = new Set();
 const categories__logos = [
 {
   name: "smartphones",
-  src: "images/local-product-images/samrtphones.jpg"
+  src: "images/samrtphones.jpg"
 },
 {
   name: "electronics",
-  src: "images/local-product-images/electronics.jpg"
+  src: "images/electronics.jpg"
 },
 {
   name: "laptops",
-  src: "images/local-product-images/laptops.jpg"
+  src: "images/laptops.jpg"
 },
 {
   name: "watches",
-  src: "images/local-product-images/watches.webp"
+  src: "images/watches.webp"
 },
 {
   name: "shoes",
-  src: "images/local-product-images/shoes.png"
+  src: "images/shoes.png"
 },
 {
   name: "fragrances",
-  src: "images/local-product-images/Fragrances.jpg"
+  src: "images/Fragrances.jpg"
 },
 {
   name: "skincare",
-  src: "images/local-product-images/skincare.jpg"
+  src: "images/skincare.jpg"
 },,
 {
   name: "men's products",
-  src: "images/local-product-images/Men's products.jpg"
+  src: "images/Men's products.jpg"
 },
 {
   name: "women's products",
-  src: "images/local-product-images/Women's products.jpg"
+  src: "images/Women's products.jpg"
 },
 {
   name: "jewelery",
-  src: "images/local-product-images/jewelry.webp"
+  src: "images/jewelry.webp"
 }
 ];
 
