@@ -37,17 +37,18 @@
         <nav class="container-xxl p-2">
           <div class="nav__phone">
             <i class="fa-solid fa-wallet mx-2"></i>
-            get upto 25% cashback on first order
+            <span data-i18n="nav.cashback">get upto 25% cashback on first order</span>
           </div>
 
           <div class="nav__links">
-            <div class="text-center"><i class="fa-solid fa-truck mx-1"></i> Track Order</div>
+            <div class="text-center"><i class="fa-solid fa-truck mx-1"></i> <span data-i18n="nav.trackOrder">Track Order</span></div>
             <div class="text-center"><i class="fa-solid fa-envelope mx-1"></i> admin@gmail.com</div>
             <div class="currency__container text-center d-flex justify-content-center align-items-md-center" style="cursor: pointer">
               <img src="https://flagcdn.com/w40/us.png" class="mx-2 currency__logo" height="16" width="25" alt="USD"> 
               <span class="currency__name" the-rate="1.0" the-currency="USD">USD</span>
               <i class="fa-solid fa-chevron-down mx-1" style="font-size: 12px"></i>
             </div>
+            <button id="language-toggle" type="button" class="btn btn-sm btn-outline-light" aria-label="Switch language">中文</button>
           </div>
 
         </nav>
@@ -58,8 +59,8 @@
           <img src="images/logo.avif" alt="E-commerce store logo">
 
           <div class="search__container position-relative">
-            <input type="text" placeholder="Search our product" class="px-3 py-2">
-            <button class="search__btn"><span aria-hidden="true"><i class="fa-solid fa-magnifying-glass mx-1"></i></span>Search</button>
+            <input type="text" placeholder="Search our product" data-i18n-placeholder="search.placeholder" class="px-3 py-2">
+            <button class="search__btn"><span aria-hidden="true"><i class="fa-solid fa-magnifying-glass mx-1"></i></span><span data-i18n="search.button">Search</span></button>
           </div>
 
           <div class="header__icons">
@@ -79,22 +80,22 @@
         <div class="container-xl py-2 d-flex justify-content-between align-items-md-center">
       
           <div class="categories__container">
-            <button class="categories__btn px-1"><span aria-hidden="true"><i class="fa-solid fa-bars mx-2"></i></span> Shop Categories</button>
+            <button class="categories__btn px-1"><span aria-hidden="true"><i class="fa-solid fa-bars mx-2"></i></span> <span data-i18n="menu.shopCategories">Shop Categories</span></button>
           </div>
 
           <div class="menubar__links">
-            <a href="#" class="text-decoration-none p-2">HOME</a>
-            <a href="#categories__section" class="text-decoration-none p-2">Categories</a>
-            <a href="#products__section" class="text-decoration-none p-2">Products</a>
-            <a href="#footer" class="text-decoration-none p-2">About</a>
+            <a href="#" class="text-decoration-none p-2" data-i18n="menu.home">HOME</a>
+            <a href="#categories__section" class="text-decoration-none p-2" data-i18n="menu.categories">Categories</a>
+            <a href="#products__section" class="text-decoration-none p-2" data-i18n="menu.products">Products</a>
+            <a href="#footer" class="text-decoration-none p-2" data-i18n="menu.about">About</a>
           </div>
         </div>
       </section>
     <!--Banner images-->
       <section class="banner__images d-flex justify-content-center align-items-center">
         <div class="banner__text text-light d-flex flex-column align-items-center ">
-          <h2 class="display-2">Smart Watches</h2>
-          <p>Amazing and Exclusive offers</p>
+          <h2 class="display-2" data-i18n="banner.smartWatches">Smart Watches</h2>
+          <p data-i18n="banner.offer">Amazing and Exclusive offers</p>
         </div>
         
         <div class="banner__bullets">
@@ -111,7 +112,7 @@
       <section id="categories__section" class="categories__section my-5">
         <div class="container-xxl">
           <div>
-            <h2 class="m-0 py-3 position-relative">Categories</h2><hr class="m-0">
+            <h2 class="m-0 py-3 position-relative" data-i18n="section.categories">Categories</h2><hr class="m-0">
             <div class="categories__control">
               <i class="fa-solid fa-chevron-left categories__previous mx-2 p-2" style="font-size: 12px"></i>
               <i class="fa-solid fa-chevron-right categories__next mx-2 p-2" style="font-size: 12px"></i> 
@@ -124,7 +125,7 @@
     <!--products-->
       <section id="products__section" class="products__section">
         <div class="container-xxl position-relative pb-5">
-          <h2 class="m-0 py-3 position-relative">Products</h2><hr class="m-0">
+          <h2 class="m-0 py-3 position-relative" data-i18n="section.products">Products</h2><hr class="m-0">
           <div class="products__container my-5"></div>
         </div>
       </section>
@@ -135,24 +136,24 @@
         <div class="container-xxl d-flex justify-content-between align-items-center">
           <div class="footer__bio">
             <img src="images/logo.avif" alt="E-commerce store logo">
-            <p class="mt-1">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio excepturi iste temporibus cum perspiciatis placeat cupiditate </p>
+            <p class="mt-1" data-i18n="footer.bio">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio excepturi iste temporibus cum perspiciatis placeat cupiditate </p>
           </div>
 
           <div class="footer__links">
             <ul class="list-unstyled">
-              <li class="mt-3"><a href="#" class="text-decoration-none text-light">Home</a></li>
-              <li class="mt-3"><a href="#products__section" class="text-decoration-none text-light">Products</a></li>
-              <li class="mt-3"><a href="#categories__section" class="text-decoration-none text-light">Categories</a></li>
-              <li class="mt-3"><a href="#header__section" class="text-decoration-none text-light">Search</a></li>
+              <li class="mt-3"><a href="#" class="text-decoration-none text-light" data-i18n="footer.home">Home</a></li>
+              <li class="mt-3"><a href="#products__section" class="text-decoration-none text-light" data-i18n="footer.products">Products</a></li>
+              <li class="mt-3"><a href="#categories__section" class="text-decoration-none text-light" data-i18n="footer.categories">Categories</a></li>
+              <li class="mt-3"><a href="#header__section" class="text-decoration-none text-light" data-i18n="footer.search">Search</a></li>
               <li class="mt-3">
-                <a href="https://github.com/omar-kamal-elkhabbaty" class="text-decoration-none text-light">About</a>
+                <a href="https://github.com/omar-kamal-elkhabbaty" class="text-decoration-none text-light" data-i18n="footer.about">About</a>
               </li>
-              <li class="mt-3"><a href="mailto:omar.muhammed.kamal@gmail.com" class="text-decoration-none text-light">Contact us</a></li>
+              <li class="mt-3"><a href="mailto:omar.muhammed.kamal@gmail.com" class="text-decoration-none text-light" data-i18n="footer.contact">Contact us</a></li>
             </ul>
           </div>
 
           <div class="footer__accounts">
-            <h3 class="text-light">Follow us</h3>
+            <h3 class="text-light" data-i18n="footer.followUs">Follow us</h3>
             <div class="mt-5">
               <a href="https://www.linkedin.com/in/omar-kamal-a76303250/" class="text-decoration-none text-light" aria-label="LinkedIn profile">
                 <span class="fa-brands fa-linkedin" aria-hidden="true"></span>

@@ -1,4 +1,241 @@
 // ========== Toast 通知系统 ==========
+const categoryTranslations = {
+  zh: {
+    "smartphones": "智能手机",
+    "electronics": "电子产品",
+    "laptops": "笔记本电脑",
+    "watches": "手表",
+    "shoes": "鞋履",
+    "fragrances": "香水",
+    "skincare": "护肤品",
+    "men's products": "男士商品",
+    "women's products": "女士商品",
+    "jewelery": "珠宝首饰",
+    "Hoodies": "连帽衫",
+    "Jackets": "夹克",
+    "Pants": "裤装",
+    "T-shirts": "T 恤"
+  }
+};
+
+const productTitleTranslations = {
+  zh: {
+    "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops": "Fjallraven Foldsack No. 1 双肩包，可放 15 英寸笔记本",
+    "Mens Casual Premium Slim Fit T-Shirts": "男士高级休闲修身 T 恤",
+    "Mens Cotton Jacket": "男士棉质夹克",
+    "Mens Casual Slim Fit": "男士休闲修身上衣",
+    "John Hardy Women's Legends Naga Gold & Silver Dragon Station Chain Bracelet": "John Hardy 女士 Naga 金银龙形手链",
+    "Solid Gold Petite Micropave": "纯金小巧密镶饰品",
+    "White Gold Plated Princess": "白金镀层公主戒指",
+    "Pierced Owl Rose Gold Plated Stainless Steel Double": "Pierced Owl 玫瑰金镀层不锈钢耳饰",
+    "WD 2TB Elements Portable External Hard Drive - USB 3.0": "WD 2TB Elements USB 3.0 移动硬盘",
+    "SanDisk SSD PLUS 1TB Internal SSD - SATA III 6 Gb/s": "SanDisk SSD PLUS 1TB SATA III 内置固态硬盘",
+    "Silicon Power 256GB SSD 3D NAND A55 SLC Cache Performance Boost SATA III 2.5": "Silicon Power 256GB 3D NAND A55 SATA III 2.5 英寸固态硬盘",
+    "WD 4TB Gaming Drive Works with Playstation 4 Portable External Hard Drive": "WD 4TB PlayStation 4 游戏移动硬盘",
+    "Acer SB220Q bi 21.5 inches Full HD (1920 x 1080) IPS Ultra-Thin": "Acer SB220Q 21.5 英寸全高清 IPS 超薄显示器",
+    "Samsung 49-Inch CHG90 144Hz Curved Gaming Monitor": "三星 49 英寸 CHG90 144Hz 曲面游戏显示器",
+    "BIYLACLESEN Women's 3-in-1 Snowboard Jacket Winter Coats": "BIYLACLESEN 女士三合一滑雪冬季外套",
+    "Lock and Love Women's Removable Hooded Faux Leather Jacket": "Lock and Love 女士可拆帽仿皮夹克",
+    "Rain Jacket Women Windbreaker Striped Climbing Raincoats": "女士条纹登山防风雨衣",
+    "MBJ Women's Solid Short Sleeve Boat Neck V": "MBJ 女士纯色短袖船领上衣",
+    "Opna Women's Short Sleeve Moisture": "Opna 女士短袖速干上衣",
+    "DANVOUY Womens T Shirt Casual Cotton Short": "DANVOUY 女士休闲棉质短袖 T 恤",
+    "Rose Printed Hoodie": "玫瑰印花连帽衫",
+    "Basic Slim Fit Chinos Trousers": "基础修身卡其裤",
+    "Carpenter Jeans": "工装牛仔裤",
+    "Black Colored Sweatpants With Elastic Hems": "黑色松紧裤脚运动裤",
+    "Oversize Faux Leather Biker Jacket": "宽松仿皮机车夹克",
+    "Oversized Denim Jacket": "宽松牛仔夹克",
+    "Black Hoodie With Contrast Graphic": "黑色撞色图案连帽衫",
+    "Lightweight Zipped Bomber Jacket": "轻薄拉链飞行夹克",
+    "Hot Stuff Hoodie": "Hot Stuff 连帽衫",
+    "Naruto Itachi Print T-shirt": "火影鼬印花 T 恤",
+    "Basic High-Neck Puff Jacket": "基础高领蓬松夹克",
+    "Orange Starter Logo T-shirt": "橙色 Starter 标志 T 恤",
+    "Tupac California Love T-Shirt": "Tupac California Love T 恤",
+    "Cropped Satin Bomber Jacket": "短款缎面飞行夹克",
+    "NMD_R1 Shoes": "NMD_R1 运动鞋",
+    "NMD_R1 SHOES": "NMD_R1 运动鞋",
+    "SL ANDRIDGE SHOES": "SL ANDRIDGE 运动鞋",
+    "OVERSIZE SHADOW TREFOIL TEE": "宽松阴影三叶草 T 恤",
+    "HARDEN VOL. 4 SHOES": "Harden Vol. 4 篮球鞋",
+    "TREFOIL TEE": "三叶草 T 恤",
+    "iPhone 9": "iPhone 9",
+    "iPhone X": "iPhone X",
+    "Samsung Universe 9": "三星 Universe 9",
+    "OPPOF19": "OPPO F19",
+    "Huawei P30": "华为 P30",
+    "MacBook Pro": "MacBook Pro",
+    "Samsung Galaxy Book": "三星 Galaxy Book",
+    "Microsoft Surface Laptop 4": "微软 Surface Laptop 4",
+    "Infinix INBOOK": "Infinix INBOOK 笔记本",
+    "HP Pavilion 15-DK1056WM": "惠普 Pavilion 15-DK1056WM 笔记本",
+    "perfume Oil": "香氛精油",
+    "Brown Perfume": "棕色香水",
+    "Fog Scent Xpressio Perfume": "Fog Scent Xpressio 香水",
+    "Non-Alcoholic Concentrated Perfume Oil": "无酒精浓缩香氛油",
+    "Eau De Perfume Spray": "淡香精喷雾",
+    "Hyaluronic Acid Serum": "玻尿酸精华",
+    "Tree Oil 30ml": "茶树精油 30ml",
+    "Oil Free Moisturizer 100ml": "无油保湿乳 100ml",
+    "Skin Beauty Serum.": "美肌精华",
+    "Freckle Treatment Cream- 15gm": "祛斑护理霜 15g",
+    "Leather Straps Wristwatch": "皮表带腕表",
+    "Waterproof Leather Brand Watch": "防水皮表带品牌手表",
+    "Royal Blue Premium Watch": "皇家蓝高级手表",
+    "Leather Strap Skeleton Watch": "皮表带镂空机械表",
+    "Stainless Steel Wrist Watch": "不锈钢腕表"
+  }
+};
+
+function normalizeProductTitle(title) {
+  return String(title || "").trim();
+}
+
+function translateCategoryName(category) {
+  const language = getCurrentLanguage();
+  return categoryTranslations[language]?.[category] || category;
+}
+
+function translateProductTitle(title) {
+  const language = getCurrentLanguage();
+  const normalizedTitle = normalizeProductTitle(title);
+  return productTitleTranslations[language]?.[normalizedTitle] || title;
+}
+
+function refreshTranslatedProductText() {
+  document.querySelectorAll("[data-product-title]").forEach((element) => {
+    element.textContent = translateProductTitle(element.getAttribute("data-product-title"));
+  });
+
+  document.querySelectorAll("[data-category-name]").forEach((element) => {
+    element.textContent = translateCategoryName(element.getAttribute("data-category-name"));
+  });
+
+  const productSectionTitle = document.querySelector(".products__section h2[data-selected-category]");
+  if(productSectionTitle) {
+    productSectionTitle.textContent = translateCategoryName(productSectionTitle.getAttribute("data-selected-category"));
+  }
+}
+
+const translations = {
+  en: {
+    "nav.cashback": "get upto 25% cashback on first order",
+    "nav.trackOrder": "Track Order",
+    "search.placeholder": "Search our product",
+    "search.button": "Search",
+    "menu.shopCategories": "Shop Categories",
+    "menu.home": "HOME",
+    "menu.categories": "Categories",
+    "menu.products": "Products",
+    "menu.about": "About",
+    "banner.smartWatches": "Smart Watches",
+    "banner.phones": "Phones",
+    "banner.laptops": "Laptops",
+    "banner.offer": "Amazing and Exclusive offers",
+    "section.categories": "Categories",
+    "section.products": "Products",
+    "footer.bio": "Discover selected products, exclusive deals, and a simple shopping experience for every customer.",
+    "footer.home": "Home",
+    "footer.products": "Products",
+    "footer.categories": "Categories",
+    "footer.search": "Search",
+    "footer.about": "About",
+    "footer.contact": "Contact us",
+    "footer.followUs": "Follow us",
+    "product.noResults": "No Results",
+    "product.availability": "Availability",
+    "product.manyInStock": "Many In Stock",
+    "cart.addToCart": "Add To Cart",
+    "cart.added": "✓ Added to cart!",
+    "cart.removed": "Item removed from cart",
+    "cart.total": "Cart Total",
+    "cart.orderNow": "Order Now",
+    "toast.currencyChanged": "Currency changed",
+    "toast.currencyFailed": "Failed to load currency rates."
+  },
+  zh: {
+    "nav.cashback": "首单最高可享 25% 返现",
+    "nav.trackOrder": "订单追踪",
+    "search.placeholder": "搜索商品",
+    "search.button": "搜索",
+    "menu.shopCategories": "商品分类",
+    "menu.home": "首页",
+    "menu.categories": "分类",
+    "menu.products": "商品",
+    "menu.about": "关于我们",
+    "banner.smartWatches": "智能手表",
+    "banner.phones": "手机",
+    "banner.laptops": "笔记本电脑",
+    "banner.offer": "惊喜专属优惠",
+    "section.categories": "分类",
+    "section.products": "商品",
+    "footer.bio": "发现精选商品、专属优惠，享受简单便捷的购物体验。",
+    "footer.home": "首页",
+    "footer.products": "商品",
+    "footer.categories": "分类",
+    "footer.search": "搜索",
+    "footer.about": "关于我们",
+    "footer.contact": "联系我们",
+    "footer.followUs": "关注我们",
+    "product.noResults": "没有结果",
+    "product.availability": "库存",
+    "product.manyInStock": "库存充足",
+    "cart.addToCart": "加入购物车",
+    "cart.added": "✓ 已加入购物车！",
+    "cart.removed": "商品已从购物车移除",
+    "cart.total": "购物车总计",
+    "cart.orderNow": "立即下单",
+    "toast.currencyChanged": "货币已更改",
+    "toast.currencyFailed": "无法加载汇率。"
+  }
+};
+
+function getCurrentLanguage() {
+  return localStorage.getItem("language") || "en";
+}
+
+function t(key) {
+  const language = getCurrentLanguage();
+  return translations[language]?.[key] || translations.en[key] || key;
+}
+
+function applyLanguage(language = getCurrentLanguage()) {
+  document.documentElement.lang = language;
+  document.body.lang = language;
+
+  document.querySelectorAll("[data-i18n]").forEach((element) => {
+    const key = element.getAttribute("data-i18n");
+    element.textContent = t(key);
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+    const key = element.getAttribute("data-i18n-placeholder");
+    element.placeholder = t(key);
+  });
+
+  const toggleButton = document.querySelector("#language-toggle");
+  if (toggleButton) {
+    toggleButton.textContent = language === "en" ? "中文" : "English";
+    toggleButton.setAttribute("aria-label", language === "en" ? "Switch language to Chinese" : "Switch language to English");
+  }
+
+  refreshTranslatedProductText();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const savedLanguage = getCurrentLanguage();
+  applyLanguage(savedLanguage);
+
+  document.querySelector("#language-toggle")?.addEventListener("click", () => {
+    const nextLanguage = getCurrentLanguage() === "en" ? "zh" : "en";
+    localStorage.setItem("language", nextLanguage);
+    applyLanguage(nextLanguage);
+    window.dispatchEvent(new CustomEvent("languagechange", { detail: { language: nextLanguage } }));
+  });
+});
+
+// ========== Toast 通知系统 ==========
 function showToast(message, type = "info") {
     let toastContainer = document.querySelector(".toast-container");
     if (!toastContainer) {
@@ -102,7 +339,7 @@ fetch_data('/api/currency')
         currency__options.classList.remove("listed");
         currency__list__ico.className = "fa-solid fa-chevron-down mx-1";
     }
-    showToast("Currency changed", "info");
+    showToast(t("toast.currencyChanged"), "info");
   });
 
   let currencies__items = document.querySelectorAll(".currency__options li");
@@ -138,7 +375,7 @@ fetch_data('/api/currency')
 })
 .catch(error => {
     console.error("Currency API error:", error);
-    showToast("Failed to load currency rates.", "error");
+    showToast(t("toast.currencyFailed"), "error");
 });
 
 
@@ -253,7 +490,8 @@ fetch_data("all_products.json").then(res => {
     let category__link = document.createElement("a");
     category__link.classList.add("text-decoration-none");
     category__link.href = `#categories__section`;
-    category__link.text = txt;
+    category__link.text = translateCategoryName(txt);
+    category__link.setAttribute("data-category-name", txt);
 
     return category__link;
   }
@@ -390,7 +628,7 @@ function render_preview(element) {
             </div>
 
             <p class="availability mb-4">
-                Availability : <span></span>
+                <span class="availability__label"></span> : <span class="availability__value"></span>
             </p>
 
         </div>
@@ -398,7 +636,7 @@ function render_preview(element) {
         <div class="product__sale mt-5">
         <button class="add__to__cart py-2 px-3">
             <i class="fa-solid fa-cart-shopping mx-2  text-decoration-none"></i>
-            Add To Cart
+            <span class="add__to__cart__text"></span>
         </button>
 
       </div>
@@ -408,14 +646,19 @@ function render_preview(element) {
     let product__title = product__preview.querySelector(".product__details h2"),
         currency__value = product__preview.querySelector(".currency__value"),
         currency__name__preview = product__preview.querySelector(".currency__name"),
-        availability__value = product__preview.querySelector(".availability span"),
-        add__to__cart__btn = product__preview.querySelector(".add__to__cart");
+        availability__label = product__preview.querySelector(".availability__label"),
+        availability__value = product__preview.querySelector(".availability__value"),
+        add__to__cart__btn = product__preview.querySelector(".add__to__cart"),
+        add__to__cart__text = product__preview.querySelector(".add__to__cart__text");
 
-    product__title.textContent = product__obj.title;
+    product__title.textContent = translateProductTitle(product__obj.title);
+    product__title.setAttribute("data-product-title", product__obj.title);
     currency__value.setAttribute("product-price", current__price);
     currency__value.textContent = current__price;
     currency__name__preview.textContent = current__currency.name;
+    availability__label.textContent = t("product.availability");
     availability__value.textContent = product_stock();
+    add__to__cart__text.textContent = t("cart.addToCart");
     add__to__cart__btn.setAttribute("product-id", product__obj.id);
 
     // elements functions
@@ -518,7 +761,7 @@ function render_preview(element) {
         }
 
         cart_items_num();
-        showToast("✓ Added to cart!", "success");
+        showToast(t("cart.added"), "success");
       }
 
 
@@ -542,7 +785,7 @@ function render_preview(element) {
         if(product__obj.stock) {
             return product__obj.stock;
         } else{
-            return "Many In Stock"
+            return t("product.manyInStock")
         }
     }
 
@@ -651,11 +894,11 @@ function display_cart_preview() {
 
     <div class="cart__summary position-relative pt-2">
       <div class="cart__summary__total pb-3">
-        Cart Total : <span class="mx-2"></span>
+        <span class="cart__summary__label">${t("cart.total")}</span> : <span class="mx-2"></span>
       </div>
       <button class="view__cart__btn py-2 px-3">
         <i href="#" class="fa-solid fa-cart-shopping mx-2 text-decoration-none"></i>
-        Order Now
+        <span>${t("cart.orderNow")}</span>
       </button>
     </div>`;
 
@@ -697,7 +940,8 @@ function display_cart_preview() {
       cart__item__image.setAttribute("src", img_src(item));
       cart__item__image.setAttribute("alt", `${item.title} - product in shopping cart`);
       cart__item__image.setAttribute("product-id", ele);
-      cart__item__title.textContent = item.title;
+      cart__item__title.textContent = translateProductTitle(item.title);
+      cart__item__title.setAttribute("data-product-title", item.title);
       cart__item__price.textContent = `${current__price} ${currency.name}`;
       product__count__num.setAttribute("product-price", current__price);
       product__count__num.setAttribute("product-id", item.id);
@@ -729,7 +973,7 @@ function display_cart_preview() {
         }
         // total price
         total_price()
-        showToast("Item removed from cart", "success");
+        showToast(t("cart.removed"), "success");
     }
     });
 
@@ -762,7 +1006,7 @@ function display_cart_preview() {
 
     function total_price() {
       let product__count__num = document.querySelectorAll(".product__count span"),
-          cart__summary__total = document.querySelector(".cart__summary__total span");
+          cart__summary__total = document.querySelector(".cart__summary__total .mx-2");
       const bill = [];
 
       product__count__num.forEach(ele => {
