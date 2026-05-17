@@ -425,8 +425,8 @@ function render_preview(element) {
 
       main__image.className = 'main__image';
       main__image.alt = `${product__obj.title} - main product photo`;
-      main__image.src = img_src(product__obj);
       set_image_fallback(main__image, product__obj);
+      main__image.src = img_src(product__obj);
       main__image__container.append(main__image);
       // image zoom
       main__image__container.onmousemove = function(e) {
@@ -553,18 +553,18 @@ function render_preview(element) {
               let pagination__img = document.createElement("img");
               pagination__img.className = "p-2 pagination__image";
               pagination__img.setAttribute("image-id", i);
-              pagination__img.src = el;
               pagination__img.alt = `${product__obj.title} - thumbnail ${i + 1} of ${product__obj.images.length}`;
               set_image_fallback(pagination__img, product__obj);
+              pagination__img.src = el;
               images__pagination__container.append(pagination__img);
             });
         } else{
           let pagination__img = document.createElement("img");
           pagination__img.className = "p-2 pagination__image";
           pagination__img.setAttribute("image-id", 0);
-          pagination__img.src = product__obj.images;
           pagination__img.alt = `${product__obj.title} - product thumbnail`;
           set_image_fallback(pagination__img, product__obj);
+          pagination__img.src = product__obj.images;
           images__pagination__container.append(pagination__img);
         }
     }
@@ -661,12 +661,18 @@ function fallback_img_src(element) {
 }
 
 function set_image_fallback(imageElement, product) {
-  imageElement.addEventListener("error", () => {
+  const applyFallback = () => {
       const fallbackSrc = fallback_img_src(product);
       if(!imageElement.src.endsWith(fallbackSrc)) {
           imageElement.src = fallbackSrc;
       }
-  });
+  };
+
+  imageElement.addEventListener("error", applyFallback);
+
+  if(imageElement.complete && imageElement.naturalWidth === 0) {
+      applyFallback();
+  }
 }
 
 function display_cart_preview() {
@@ -736,9 +742,9 @@ function display_cart_preview() {
           product__count__num = product__item.querySelector(".product__count span"),
           current__price = (currency.rate * item.price).toFixed(2);
 
-      cart__item__image.setAttribute("src", img_src(item));
       cart__item__image.setAttribute("alt", `${item.title} - product in shopping cart`);
       set_image_fallback(cart__item__image, item);
+      cart__item__image.setAttribute("src", img_src(item));
       cart__item__image.setAttribute("product-id", ele);
       cart__item__title.textContent = item.title;
       cart__item__price.textContent = `${current__price} ${currency.name}`;
