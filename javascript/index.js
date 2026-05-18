@@ -8,15 +8,15 @@ const banner__text__h2 = document.querySelector(".banner__text h2");
 let images__data = [
     {
         src: `images/banner-1.webp`,
-        title: "Smart Watches"
+        titleKey: "banner.smartWatches"
     },
     {
         src: `images/banner-2.webp`,
-        title: "Phones"
+        titleKey: "banner.phones"
     },
     {
         src: `images/banner-3.jpg`,
-        title: "Laptops"
+        titleKey: "banner.laptops"
     }
 ];
 
@@ -75,10 +75,17 @@ banner__previous.onclick = function() {
 }
 
 function banner_img_slider(index) {
-    banner__text__h2.textContent = images__data[index].title;
+    banner__text__h2.textContent = t(images__data[index].titleKey);
     banner__images.style.cssText = `background: url(${images__data[index].src}) no-repeat; background-size: cover`;
     bullets[index].classList.add("active-bullet");
 }
+
+window.addEventListener("languagechange", () => {
+    const active__bullet = document.querySelector(".active-bullet");
+    if(active__bullet) {
+        banner__text__h2.textContent = t(images__data[+active__bullet.getAttribute("img-id")].titleKey);
+    }
+});
 
 // search results
 const search__container = document.querySelector(".search__container");
@@ -166,7 +173,7 @@ search__btn.onclick = function() {
 
             } else{
                 products__container.classList.add("no__results");
-                products__container.innerHTML = "<h3>No Results</h3>";
+                products__container.innerHTML = `<h3>${t("product.noResults")}</h3>`;
                 location.href = "#products__section";
                 search__container__input.value = "";
                 if(search__results){
@@ -193,7 +200,8 @@ categories__logos.forEach((ele, i) => {
     category__card.setAttribute("category-id", i);
     category__card.setAttribute("name", ele.name);
     category__card__hover.className = "category__card__hover d-flex justify-content-center align-items-center";
-    category__card__hover.textContent = ele.name;
+    category__card__hover.textContent = translateCategoryName(ele.name);
+    category__card__hover.setAttribute("data-category-name", ele.name);
     category__card__img.src = ele.src;
     category__card__img.alt = category_image_alt(ele.name);
 
@@ -209,7 +217,8 @@ category__cards.forEach(ele => {
     ele.addEventListener("click", () => {
 
         let category__title = document.querySelector(".products__section h2");
-        category__title.textContent = ele.getAttribute("name");
+        category__title.textContent = translateCategoryName(ele.getAttribute("name"));
+        category__title.setAttribute("data-selected-category", ele.getAttribute("name"));
 
         display_loading_spinner(products__container);
 
@@ -304,8 +313,10 @@ function render_products(ele) {
 
     product__info.className = "product__info p-2 ";
     category__name.className = "category__name";
-    category__name.textContent = ele.category;
-    product__title.textContent = ele.title;
+    category__name.textContent = translateCategoryName(ele.category);
+    category__name.setAttribute("data-category-name", ele.category);
+    product__title.textContent = translateProductTitle(ele.title);
+    product__title.setAttribute("data-product-title", ele.title);
     product__price.className = "product__price";
     product__price.setAttribute("price-USD", ele.price);
     product__price.textContent = product_price();
