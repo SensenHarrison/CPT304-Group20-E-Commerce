@@ -1,74 +1,77 @@
 [![codecov](https://codecov.io/github/SensenHarrison/CPT304-Group20-E-Commerce/graph/badge.svg?token=LU30UWVWLJ)](https://codecov.io/github/SensenHarrison/CPT304-Group20-E-Commerce)
-# E-commerce Website
 
-This project is an E-commerce website built using Vanilla JavaScript, Bootstrap, and SASS. It provides a platform for users to browse products, add them to their cart, and proceed to checkout.
+# CPT304 Group 20 E-Commerce Website
 
-## Features
+## Project Overview
 
-- **Product Listing**: Users can view a list of products with details such as name, price, and image.
-- **Product Search**: Users can search for specific products using keywords.
-- **Product Details**: Users can click on a product to view its detailed information.
-- **Shopping Cart**: Users can add products to their shopping cart and manage the quantities.
-- **Checkout Process**: Users can proceed to checkout, enter their shipping and payment details, and place an order.
-- **Order History**: Users can view their order history and track the status of their orders.
-- **Responsive Design**: The website is responsive and works well on different devices and screen sizes.
+This repository contains the CPT304 Group 20 e-commerce coursework project. It is a browser-based shopping site built with HTML, SASS/CSS, Bootstrap, and modular JavaScript. The application lets users browse products, search for items, preview product details, manage a shopping cart, switch currencies and languages, and receive feedback through toast notifications.
 
-## Technologies Used
+Live demo: [https://cpt-304-group20-e-commerce.vercel.app/](https://cpt-304-group20-e-commerce.vercel.app/)
 
-- **Vanilla JavaScript**: The website is built using pure JavaScript without any frameworks or libraries.
-- **Bootstrap**: The Bootstrap framework is used for styling and layout.
-- **SASS**: SASS (Syntactically Awesome Style Sheets) is used as a CSS preprocessor to enhance the styling capabilities.
+## Main Features
 
-## Project Structure
+- Product listing, search, and detail preview
+- Shopping cart with quantity and item management
+- Currency selection
+- Toast feedback
+- English/Chinese language switching
+- Cookie consent banner
+- Privacy policy page
+- Accessibility improvements
+- DOM XSS mitigation for dynamic product rendering
+- Jest, Istanbul, and Codecov testing
 
-The project has the following directory structure:
+## Run Locally
 
-```
-.
-├── index.html
-├── style
-│   └── bootstrap
-│       ├── bootstrap.js
-│       ├── bootstrap.css
-│   └── global
-│       ├── _global.scss
-│       ├── _mixins.scss
-│       ├── _animation.scss
-│       ├── _nav.scss
-│   └── pages
-│       ├── index.css
-│       ├── index.scss
-├── javasript
-│   ├── main.js
-│   └── index.js
-└── images
+1. Clone the repository:
+
+```bash
+git clone https://github.com/SensenHarrison/CPT304-Group20-E-Commerce.git
 ```
 
-- `index.html`: The main HTML file that defines the structure of the website.
-- `css/main.css`: The compiled CSS file generated from the SASS code.
-- `js/main.js`: The main JavaScript file that initializes the application and handles user interactions.
-- `js/index.js`: index page functions.
-- `sass/index.scss`: The index SASS file that imports other SASS partials and defines the overall styling.
+2. Open the project directory:
 
-## Getting Started
+```bash
+cd CPT304-Group20-E-Commerce
+```
 
-To run the E-commerce website locally, follow these steps:
+3. Start a local static server:
 
-1. Clone the repository: `git clone https://github.com/omar-kamal-elkhabbaty/E-commerce`
-2. Navigate to the project directory: `cd e-commerce-website`
-3. Open the `index.html` file in your preferred web browser.
+```bash
+py -m http.server 8000
+```
 
-## Customization
+4. Open the site in your browser:
 
-If you want to customize the website, you can modify the following files:
+```text
+http://localhost:8000
+```
 
-- `index.html`: Update the HTML structure and content.
-- `js/main.js`: Modify the JavaScript code to add new functionalities or change existing ones.
-- `sass/*.scss`: Update the SASS files to customize the styling.
+## Testing
 
-## Contributing
+Install dependencies:
 
-Contributions to this project are welcome. If you find any issues or want to add new features, feel free to open an issue or submit a pull request.
+```bash
+npm ci
+```
 
-## Contact
-- You can contact with us `omar.muhammed.kamal@gmail.com`
+Run the Jest test suite with coverage:
+
+```bash
+npm test
+```
+
+Coverage focuses on the modular JavaScript logic under:
+
+- `javascript/components/`
+- `javascript/services/`
+- `javascript/utils/`
+
+## Test Coverage Summary
+
+- Test Suites: 17 passed, 17 total
+- Tests: 162 passed, 162 total
+- Statements: 97.61%
+- Branches: 92.10%
+- Functions: 94.02%
+- Lines: 98.75%
