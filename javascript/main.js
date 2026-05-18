@@ -796,4 +796,3 @@ function display_cart_preview() {
 
 }
 
-
