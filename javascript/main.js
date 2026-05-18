@@ -425,6 +425,7 @@ function render_preview(element) {
 
       main__image.className = 'main__image';
       main__image.alt = `${product__obj.title} - main product photo`;
+      set_image_fallback(main__image, product__obj);
       main__image.src = img_src(product__obj);
       main__image__container.append(main__image);
       // image zoom
@@ -552,16 +553,18 @@ function render_preview(element) {
               let pagination__img = document.createElement("img");
               pagination__img.className = "p-2 pagination__image";
               pagination__img.setAttribute("image-id", i);
-              pagination__img.src = el;
               pagination__img.alt = `${product__obj.title} - thumbnail ${i + 1} of ${product__obj.images.length}`;
+              set_image_fallback(pagination__img, product__obj);
+              pagination__img.src = el;
               images__pagination__container.append(pagination__img);
             });
         } else{
           let pagination__img = document.createElement("img");
           pagination__img.className = "p-2 pagination__image";
           pagination__img.setAttribute("image-id", 0);
-          pagination__img.src = product__obj.images;
           pagination__img.alt = `${product__obj.title} - product thumbnail`;
+          set_image_fallback(pagination__img, product__obj);
+          pagination__img.src = product__obj.images;
           images__pagination__container.append(pagination__img);
         }
     }
@@ -624,6 +627,114 @@ function img_src(element) {
       return element.images[0]
   } else{
       return element.images;
+  }
+}
+
+function fallback_img_src(element) {
+  const category = element?.category || "";
+  const fallbackImages = {
+    "smartphones": ["images/samrtphones.jpg", "images/phones.jpg"],
+    "electronics": [
+      "images/local-product-images/electronics 1.png",
+      "images/local-product-images/electronics 2.png",
+      "images/local-product-images/electronics 3.png",
+      "images/local-product-images/Hard Drive.png"
+    ],
+    "laptops": [
+      "images/local-product-images/laptops 1.png",
+      "images/local-product-images/laptops 2.png",
+      "images/local-product-images/laptops 3.png",
+      "images/local-product-images/laptops 4.png"
+    ],
+    "watches": [
+      "images/local-product-images/watches1.png",
+      "images/local-product-images/watches2.png",
+      "images/local-product-images/watches 3.png",
+      "images/local-product-images/Leather Strap Skeleton Watch.png"
+    ],
+    "shoes": [
+      "images/local-product-images/shoes1.png",
+      "images/local-product-images/shoes2.png",
+      "images/local-product-images/shoes3.png"
+    ],
+    "fragrances": [
+      "images/local-product-images/fragrances 1.png",
+      "images/local-product-images/fragrances 2.png",
+      "images/local-product-images/fragrances 3.png"
+    ],
+    "skincare": [
+      "images/local-product-images/skincare1.png",
+      "images/local-product-images/skincare2.png",
+      "images/local-product-images/skincare 3.png"
+    ],
+    "men's products": [
+      "images/local-product-images/men's products1.png",
+      "images/local-product-images/men's products2.png",
+      "images/local-product-images/men's products 2.png",
+      "images/local-product-images/men's products 4.png",
+      "images/local-product-images/men's products 5.png"
+    ],
+    "women's products": [
+      "images/local-product-images/women's products1.png",
+      "images/local-product-images/women's products2.png",
+      "images/local-product-images/women's products3.png",
+      "images/local-product-images/winterjacket.png"
+    ],
+    "jewelery": ["images/jewelry.webp"],
+    "Hoodies": [
+      "images/local-product-images/men's products1.png",
+      "images/local-product-images/men's products2.png"
+    ],
+    "Jackets": [
+      "images/local-product-images/men's products 2.png",
+      "images/local-product-images/men's products 4.png",
+      "images/local-product-images/men's products 5.png"
+    ],
+    "Pants": [
+      "images/local-product-images/men's products2.png",
+      "images/local-product-images/men's products 4.png"
+    ],
+    "T-shirt": [
+      "images/local-product-images/men's products1.png",
+      "images/local-product-images/men's products 5.png"
+    ],
+    "T-shirts": [
+      "images/local-product-images/men's products1.png",
+      "images/local-product-images/men's products 5.png"
+    ]
+  };
+
+  const title = String(element?.title || "").trim();
+  const titleFallbacks = {
+    "WD 4TB Gaming Drive Works with Playstation 4 Portable External Hard Drive": "images/local-product-images/Hard Drive.png",
+    "Leather Strap Skeleton Watch": "images/local-product-images/Leather Strap Skeleton Watch.png",
+    "BIYLACLESEN Women's 3-in-1 Snowboard Jacket Winter Coats": "images/local-product-images/winterjacket.png"
+  };
+
+  if(titleFallbacks[title]) {
+      return titleFallbacks[title];
+  }
+
+  const options = fallbackImages[category] || ["images/images.jpg"];
+  const numericId = Number.isFinite(+element?.id) ? +element.id : 0;
+  const titleHash = [...title].reduce((total, char) => total + char.charCodeAt(0), 0);
+  const fallbackIndex = Math.abs(numericId + titleHash) % options.length;
+
+  return options[fallbackIndex];
+}
+
+function set_image_fallback(imageElement, product) {
+  const applyFallback = () => {
+      const fallbackSrc = fallback_img_src(product);
+      if(!imageElement.src.endsWith(fallbackSrc)) {
+          imageElement.src = fallbackSrc;
+      }
+  };
+
+  imageElement.addEventListener("error", applyFallback);
+
+  if(imageElement.complete && imageElement.naturalWidth === 0) {
+      applyFallback();
   }
 }
 
@@ -694,8 +805,9 @@ function display_cart_preview() {
           product__count__num = product__item.querySelector(".product__count span"),
           current__price = (currency.rate * item.price).toFixed(2);
 
-      cart__item__image.setAttribute("src", img_src(item));
       cart__item__image.setAttribute("alt", `${item.title} - product in shopping cart`);
+      set_image_fallback(cart__item__image, item);
+      cart__item__image.setAttribute("src", img_src(item));
       cart__item__image.setAttribute("product-id", ele);
       cart__item__title.textContent = item.title;
       cart__item__price.textContent = `${current__price} ${currency.name}`;

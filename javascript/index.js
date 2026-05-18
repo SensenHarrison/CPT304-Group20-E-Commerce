@@ -298,6 +298,7 @@ function render_products(ele) {
         product__rating = document.createElement("div");
 
     product__img__container.className = "product__img__container";
+    set_image_fallback(product__img, ele);
     product__img.setAttribute("src", img_src(ele));
     product__img.setAttribute("alt", `${ele.title} - product listing photo`);
 
