@@ -1,3 +1,4 @@
+[![codecov](https://codecov.io/github/SensenHarrison/CPT304-Group20-E-Commerce/graph/badge.svg?token=LU30UWVWLJ)](https://codecov.io/github/SensenHarrison/CPT304-Group20-E-Commerce)
 # E-commerce Website
 
 This project is an E-commerce website built using Vanilla JavaScript, Bootstrap, and SASS. It provides a platform for users to browse products, add them to their cart, and proceed to checkout.
