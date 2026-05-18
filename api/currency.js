@@ -1,4 +1,5 @@
-﻿module.exports = async function handler(req, res) {
+﻿
+module.exports = async function handler(req, res) {
     const apiKey = process.env.CURRENCYFREAKS_API_KEY;
 
     if (!apiKey) {
