@@ -48,7 +48,16 @@
               <span class="currency__name" the-rate="1.0" the-currency="USD">USD</span>
               <i class="fa-solid fa-chevron-down mx-1" style="font-size: 12px"></i>
             </div>
-            <button id="language-toggle" type="button" class="btn btn-sm btn-outline-light" aria-label="Switch language">中文</button>
+            <div id="language-toggle" class="language__container text-center d-flex justify-content-center align-items-md-center" role="button" tabindex="0" aria-label="Select language" aria-expanded="false">
+              <span class="language__name" data-language="en">English</span>
+              <i class="language__list__ico fa-solid fa-chevron-down mx-1" style="font-size: 12px"></i>
+              <ul class="language__options list-unstyled p-1" aria-label="Language options">
+                <li class="language__option" data-language="en">English</li>
+                <li class="language__option" data-language="zh">中文</li>
+                <li class="language__option" data-language="es">Español</li>
+                <li class="language__option" data-language="fr">Français</li>
+              </ul>
+            </div>
           </div>
 
         </nav>
