@@ -15,6 +15,8 @@ module.exports = {
         'javascript/services/**/*.js',
         'javascript/utils/**/*.js',
     ],
+    collectCoverage: true,
+    coverageReporters: ['text', 'lcov', 'cobertura', 'html'],
     coverageThreshold: {
         global: {
             statements: 80,
