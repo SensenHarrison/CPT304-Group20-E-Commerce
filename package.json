@@ -2,7 +2,10 @@
   "name": "CPT304-Group20-E-Commerce",
   "version": "1.0.0",
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:verbose": "jest --verbose",
+    "test:ci": "jest --coverage --watchAll=false"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
@@ -10,8 +13,5 @@
     "babel-jest": "^30.4.1",
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1"
-  },
-  "jest": {
-    "testEnvironment": "jsdom"
   }
 }
