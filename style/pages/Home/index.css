@@ -833,7 +833,58 @@ nav .currency__options span {
 nav .currency__options span:hover {
   color: #000;
 }
+nav .language__container {
+  position: relative;
+  align-items: center;
+  background-color: transparent;
+  color: #000;
+  cursor: pointer;
+}
+nav .language__container:hover,
+nav .language__container:focus,
+nav .language__container:active,
+nav .language__container[aria-expanded=true] {
+  color: #006b3f;
+}
+nav .language__container:focus-visible {
+  outline: 2px solid #006b3f;
+  outline-offset: 3px;
+}
+nav .language__name,
+nav .language__list__ico {
+  color: inherit;
+}
+nav .language__options {
+  position: absolute;
+  background-color: #FFF;
+  width: 130px;
+  top: 135%;
+  right: 0;
+  z-index: 100;
+  border-radius: 10px;
+  border: 1px solid #e4e2e0;
+  display: none;
+}
+nav .language__options li {
+  margin-bottom: 5px;
+  color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+nav .language__options li:hover,
+nav .language__options li:focus,
+nav .language__options li:active {
+  color: #006b3f;
+}
 nav .currency__options::before {
+  content: "";
+  position: absolute;
+  top: -13px;
+  right: 8%;
+  border-width: 7px;
+  border-style: solid;
+  border-color: transparent transparent #f5f5f5 transparent;
+}
+nav .language__options::before {
   content: "";
   position: absolute;
   top: -13px;
@@ -1196,7 +1247,7 @@ header .header__icons .cart__items__num {
     font-size: 13px;
     position: relative;
   }
-  nav .nav__links > div.text-center:not(.currency__container)::after {
+  nav .nav__links > div.text-center:not(.currency__container):not(.language__container)::after {
     content: "";
     position: absolute;
     right: -10%;
